@@ -35,7 +35,7 @@ module LoadMap
         throw StandardError, 'В переданном файле отсутсвует уровень \'Roads\''
       end
       current_tag = @parser.resume
-      while current_tag && current_tag.tag_type != :end
+      while current_tag
         tag_processed(current_tag)
         current_tag = @parser.resume
       end
@@ -71,7 +71,7 @@ module LoadMap
       return SvgTag.new(tag_type: :circle, content: m[:content], length: m.end(0)) if m
 
       m = remainder_str.match(REG_EXP_FIND_END)
-      return SvgTag.new(tag_type: :end) if m
+      return nil if m
 
       SvgTag.new(tag_type: :unknown)
     end

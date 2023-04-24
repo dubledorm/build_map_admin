@@ -6,7 +6,7 @@ module LoadMap
   class SvgTag
     include ActiveModel::Model
 
-    TAG_TYPES = %i[circle line layer end unknown].freeze
+    TAG_TYPES = %i[circle line layer unknown].freeze
 
     attr_accessor :length, :tag_type, :content
 
