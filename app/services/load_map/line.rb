@@ -2,7 +2,7 @@
 
 # Модуль группирует всё необходимое для загрузки карт и маршрутов помещений
 module LoadMap
-  # Найденный в svg файле тег line
+  #  # Класс для обработки тэга line
   class Line < BaseTag
 
     attr_reader :x1, :y1, :x2, :y2, :length, :content

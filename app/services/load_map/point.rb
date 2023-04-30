@@ -2,7 +2,7 @@
 
 # Модуль группирует всё необходимое для загрузки карт и маршрутов помещений
 module LoadMap
-  # Найденный в svg файле тег ellipse или point
+  # Класс для обработки тэга circle
   class Point < BaseTag
 
     attr_reader :x1, :y1, :id, :r, :length, :content

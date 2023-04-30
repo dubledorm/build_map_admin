@@ -7,7 +7,6 @@ module LoadMap
   class SvgParser
     REG_EXP_FIND_LAYER = /<g class="layer">[^<]*<title>Roads<\/title>/.freeze
     REG_EXP_FIND_END = /^\s*<\/g>/.freeze
-    KNOWN_TAG_CLASSES = [LoadMap::Line, LoadMap::Point].freeze # Сюда можно добавлять новые классы для расширения
 
     ROADS_NOT_EXIST_MESSAGE = 'В переданном файле отсутсвует уровень \'Roads\''
     UNKNOWN_TAG_MESSAGE = lambda { |current_tag|
@@ -19,7 +18,7 @@ module LoadMap
     def initialize(svg_string)
       @svg_string = svg_string.gsub("\n", '')
       @result = {}
-      @known_tag_classes = KNOWN_TAG_CLASSES
+      @known_tag_classes = LoadMap.known_tag_classes
       @parser = build_parser
     end
 
@@ -28,7 +27,6 @@ module LoadMap
       raise SvgParserError, ROADS_NOT_EXIST_MESSAGE unless start_pos_content
 
       read_tags_in_layer_str(@svg_string[start_pos_content..])
-
       self
     end
 
@@ -61,11 +59,8 @@ module LoadMap
     end
 
     def add_to_result(current_tag)
-      if @result.include?(current_tag.class.name)
-        @result[current_tag.class.name] << current_tag
-      else
-        @result[current_tag.class.name] = [current_tag]
-      end
+      @result[current_tag.class.name] ||= []
+      @result[current_tag.class.name] << current_tag
     end
 
     def start_content_of_layer_tag(remainder_str)
@@ -80,8 +75,7 @@ module LoadMap
         return known_tag_class.new(remainder_str) if known_tag_class.str_start_with_me?(remainder_str)
       end
 
-      m = remainder_str.match(REG_EXP_FIND_END)
-      return nil if m
+      return nil if remainder_str =~ REG_EXP_FIND_END
 
       UnknownTag.new(remainder_str)
     end

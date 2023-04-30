@@ -12,20 +12,24 @@ module LoadMap
       raise LoadMap::SvgParserError, "Ошибка разбора строки #{tag_str}. Ошибка: #{e.message}"
     end
 
+    # Возвращает true если строка _str начинается с этого тега
     def self.str_start_with_me?(_str)
       raise NotImplementedError
     end
 
+    # Возвращает длину строки тега. По ней будет происходить обрезка входной строки, чтобы искать следующий тег
     def length
       raise NotImplementedError
     end
 
+    # Сожержимое тега. Используется при выводе ошибок разбора
     def content
       raise NotImplementedError
     end
 
     protected
 
+    # Основная функция разбирающая тег и получающая все необходимые параметры из него
     def tag_str_parse(_str)
       raise NotImplementedError
     end
