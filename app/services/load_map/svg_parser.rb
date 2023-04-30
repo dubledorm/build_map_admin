@@ -25,9 +25,17 @@ module LoadMap
 
     def parse
       start_pos_content = start_content_of_layer_tag(@svg_string)
-      raise StandardError, ROADS_NOT_EXIST_MESSAGE unless start_pos_content
+      raise SvgParserError, ROADS_NOT_EXIST_MESSAGE unless start_pos_content
 
-      current_tag = @parser.resume(@svg_string[start_pos_content..])
+      read_tags_in_layer_str(@svg_string[start_pos_content..])
+
+      self
+    end
+
+    private
+
+    def read_tags_in_layer_str(layer_str)
+      current_tag = @parser.resume(layer_str)
 
       while current_tag
         raise StandardError, UNKNOWN_TAG_MESSAGE.call(current_tag) if current_tag.is_a?(LoadMap::UnknownTag)
@@ -40,8 +48,6 @@ module LoadMap
     rescue StandardError => e
       raise SvgParserError, e.message
     end
-
-    private
 
     def build_parser
       Fiber.new do |remainder_str|
