@@ -5,16 +5,33 @@ module LoadMap
   # Найденный в svg файле тег ellipse или point
   class Point < BaseTag
 
-    attr_reader :x1, :y1, :id, :r
+    attr_reader :x1, :y1, :id, :r, :length, :content
 
     REG_EXP_X1 = /cx="(?<x1>[^"]*)"/.freeze
     REG_EXP_Y1 = /cy="(?<y1>[^"]*)"/.freeze
     REG_EXP_R = /r="(?<r>[^"]*)"/.freeze
     REG_EXP_ID = /id="(?<id>[^"]*)"/.freeze
+    REG_EXP_FIND_CIRCLE = %r{^\s*<circle\s*(?<content>[^/]*)/>}.freeze
+    UNKNOWN_LENGTH_MESSAGE = 'Перед вызовом length должна быть вызвана функция tag_str_parse'
+
+    def self.str_start_with_me?(str)
+      str =~ REG_EXP_FIND_CIRCLE
+    end
 
     protected
 
-    def tag_str_parse(tag_str)
+    def tag_str_parse(str)
+      m = str.match(REG_EXP_FIND_CIRCLE)
+      raise LoadMap::SvgParserError, "Строка #{str} должна соответствовать: #{REG_EXP_FIND_CIRCLE}" unless m
+
+      @content = m[:content]
+      @length = m.end(0)
+      parse_coordinates(@content)
+    end
+
+    private
+
+    def parse_coordinates(tag_str)
       @x1 = normalize_coordinate(tag_str.match(REG_EXP_X1)[:x1])
       @y1 = normalize_coordinate(tag_str.match(REG_EXP_Y1)[:y1])
       @r = normalize_coordinate(tag_str.match(REG_EXP_R)[:r])

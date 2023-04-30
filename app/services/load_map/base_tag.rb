@@ -12,10 +12,21 @@ module LoadMap
       raise LoadMap::SvgParserError, "Ошибка разбора строки #{tag_str}. Ошибка: #{e.message}"
     end
 
+    def self.str_start_with_me?(_str)
+      raise NotImplementedError
+    end
+
+    def length
+      raise NotImplementedError
+    end
+
+    def content
+      raise NotImplementedError
+    end
 
     protected
 
-    def tag_str_parse(_tag_str)
+    def tag_str_parse(_str)
       raise NotImplementedError
     end
 
