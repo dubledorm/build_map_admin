@@ -8,4 +8,8 @@ module LoadMap
   end
 
   mattr_accessor :saver_class
+
+  # Класс ошибки разбора svg файла
+  class SvgParserError < StandardError
+  end
 end

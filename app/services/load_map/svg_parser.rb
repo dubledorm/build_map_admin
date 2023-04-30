@@ -3,10 +3,6 @@
 # Модуль группирует всё необходимое для загрузки карт и маршрутов помещений
 module LoadMap
 
-  # Класс ошибки разбора svg файла
-  class SvgParserError < StandardError
-  end
-
   # сервис для разбора svg файла и получения из него списка маршрутов и списка точек.
   class SvgParser
     REG_EXP_FIND_LAYER = /<g class="layer">[^<]*<title>Roads<\/title>/.freeze
@@ -32,7 +28,7 @@ module LoadMap
 
     def parse
       if @parser.resume(@svg_string)&.tag_type != :layer
-        throw StandardError, 'В переданном файле отсутсвует уровень \'Roads\''
+        raise StandardError, 'В переданном файле отсутсвует уровень \'Roads\''
       end
       current_tag = @parser.resume
       while current_tag
@@ -50,7 +46,7 @@ module LoadMap
 
     def tag_processed(current_tag)
       if current_tag.tag_type == :unknown
-        throw StandardError, "На уровне 'Roads' в svg файле встретился неизвестный тег #{current_tag.content}"
+        raise StandardError, "На уровне 'Roads' в svg файле встретился неизвестный тег #{current_tag.content}"
       end
 
       @tags << TagFactory.build(current_tag)
