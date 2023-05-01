@@ -18,4 +18,8 @@ RSpec.describe LoadMap::Point do
   it { expect(described_class.new(circle_example).id).to eq('Point1') }
 
   it { expect { described_class.new(bad_example).x1 }.to raise_error(LoadMap::SvgParserError) }
+
+  it { expect(described_class.new(circle_example).inside_of_me?(33_003, 271_761)).to be_truthy }
+  it { expect(described_class.new(circle_example).inside_of_me?(34_003, 270_761)).to be_truthy }
+  it { expect(described_class.new(circle_example).inside_of_me?(54_000, 100_000)).to be_falsy }
 end

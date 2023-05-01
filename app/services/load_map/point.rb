@@ -18,6 +18,13 @@ module LoadMap
       str =~ REG_EXP_FIND_CIRCLE
     end
 
+    def inside_of_me?(point_x, point_y)
+      l = x1 - point_x
+      h = y1 - point_y
+      g = Math.sqrt(l * l + h * h)
+      g < r
+    end
+
     protected
 
     def tag_str_parse(str)
