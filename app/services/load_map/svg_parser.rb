@@ -4,16 +4,35 @@
 module LoadMap
 
   # сервис для разбора svg файла и получения из него списка линий и списка точек.
+  # В конструктор передаётся прочитанный в строку svg файл, содержащий уровень, помеченный как
+  # REG_EXP_FIND_LAYER
+  # В этом уровне, до достижения его конца REG_EXP_FIND_END будут искаться теги, списко которых настраивается в
+  # массиве LoadMap.known_tag_classes
+  # Результатом работы функции parse будет заполненный hash result, где в качестве ключей используются названия классов
+  # найденных тегов, а в качестве значений - массив экземпляров классов, содержащих значения
+  #
+  # Пример запуска:
+  # svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read).parse
+  #
+  # Пример настройки:
+  # LoadMap.setup do |config|
+  #   [LoadMap::Line, LoadMap::Point].each do |tag_class|
+  #     config.known_tag_classes << tag_class
+  #   end
+  # end
+  #
+  # Пример использования результата
+  # svg_parser.result['LoadMap::Line'][1]
   class SvgParser
-    REG_EXP_FIND_LAYER = /<g class="layer">[^<]*<title>Roads<\/title>/.freeze
-    REG_EXP_FIND_END = /^\s*<\/g>/.freeze
+    REG_EXP_FIND_LAYER = %r{<g class="layer">[^<]*<title>Roads</title>}.freeze
+    REG_EXP_FIND_END = %r{^\s*</g>}.freeze
 
     ROADS_NOT_EXIST_MESSAGE = 'В переданном файле отсутсвует уровень \'Roads\''
     UNKNOWN_TAG_MESSAGE = lambda { |current_tag|
       "На уровне 'Roads' в svg файле встретился неизвестный тег #{current_tag.content}"
     }
 
-    attr_reader :result, :known_tag_classes
+    attr_reader :result
 
     def initialize(svg_string)
       @svg_string = svg_string.gsub("\n", '')

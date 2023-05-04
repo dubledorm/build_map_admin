@@ -3,23 +3,20 @@
 # Модуль группирует всё необходимое для загрузки карт и маршрутов помещений
 module LoadMap
   # сервис для загрузки маршрутов для конкретного помещения.
-  class LoadBuildRoads
+  class LoadRoads
     def initialize(source_svg_path, source_xls_path)
       @source_svg_path = source_svg_path
       @source_xls_path = source_xls_path
     end
 
     def done
-      file_parse
+      svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read).parse
+      roads = Roads.build(svg_parser)
     end
 
     private
 
     attr_reader :targets, :points
-
-    def file_parse
-
-    end
 
     def save_result
       LoadMap.saver_class.new.save
