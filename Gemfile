@@ -79,6 +79,7 @@ gem 'haml'
 gem 'draper'
 gem 'has_scope'
 gem 'awesome_print'
+gem 'rubyXL'
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

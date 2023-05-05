@@ -11,12 +11,13 @@ module LoadMap
 
     def done
       svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read).parse
-      roads = Roads.build(svg_parser)
+      @roads = Roads.build(svg_parser)
+      @targets = Targets.build(svg_parser)
     end
 
     private
 
-    attr_reader :targets, :points
+    attr_reader :targets, :roads
 
     def save_result
       LoadMap.saver_class.new.save
