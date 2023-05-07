@@ -4,28 +4,27 @@
 module LoadMap
   # Класс для обогащения списка lines, полученных из SvgParser идентификаторами точек.
   # Класс построен на основе Enumerator, чтобы не создавать повторный массив lines
+  # В качестве параметров конструктора передаётся эксземпляр SvgParser, у которого
+  # уже должен быть выполнен вызов метода parse, result_key - ключ, по которому в svg_parser.result
+  # нужно искать массив линий, и класс, предоставляющий функцию find_point_id - поиск идентификатора точки
+  # по её координатам
   class Roads < Enumerator
+    attr_reader :point_finder
+
+    delegate :find_point_id, to: :find_point_id
 
     COULD_NOT_FIND_POINT_ID = lambda { |x, y|
       "Не могу найти идентификатор точки для координат x = #{x}, y = #{y}"
     }
 
-    # Билдер, выдаёт объект класса Roads, который лениво отдаёт обогащённые элементы lines
-    def self.build(svg_parser)
-      new do |y|
-        svg_parser.result['LoadMap::Line'].each do |line|
-          y << Road.new(line, LoadMap::Roads.find_point_id(svg_parser, line.x1, line.y1),
-                        LoadMap::Roads.find_point_id(svg_parser, line.x2, line.y2))
+    def initialize(*several_variants, lines, point_finder)
+      super(*several_variants) do |y|
+        lines.each do |line|
+          y << Road.new(line, find_point_id(line.x1, line.y1), find_point_id(line.x2, line.y2))
         end
       end
-    end
 
-    # Найти идентификатор точки в списке svg_parser.result[LoadMap::Line] по переданным координатам
-    def self.find_point_id(svg_parser, point_x, point_y)
-      index = svg_parser.result['LoadMap::Point']&.find_index { |point| point.inside_of_me?(point_x, point_y) }
-      raise LoadMap::SvgParserError, COULD_NOT_FIND_POINT_ID.call(point_x, point_y) unless index
-
-      svg_parser.result['LoadMap::Point'][index].id
+      @point_finder = point_finder
     end
   end
 end

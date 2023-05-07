@@ -42,7 +42,8 @@ module LoadMap
       @x1 = normalize_coordinate(tag_str.match(REG_EXP_X1)[:x1])
       @y1 = normalize_coordinate(tag_str.match(REG_EXP_Y1)[:y1])
       @r = normalize_coordinate(tag_str.match(REG_EXP_R)[:r])
-      @id = tag_str.match(REG_EXP_ID)[:id]
+      m = tag_str.match(REG_EXP_ID)
+      @id = m[:id] if m
     end
   end
 end

@@ -7,19 +7,12 @@ module LoadMap
   # В конструктор передаётся прочитанный в строку svg файл, содержащий уровень, помеченный как
   # REG_EXP_FIND_LAYER
   # В этом уровне, до достижения его конца REG_EXP_FIND_END будут искаться теги, списко которых настраивается в
-  # массиве LoadMap.known_tag_classes
+  # массиве known_tag_classes, также передаваемой через параметр.
   # Результатом работы функции parse будет заполненный hash result, где в качестве ключей используются названия классов
   # найденных тегов, а в качестве значений - массив экземпляров классов, содержащих значения
   #
   # Пример запуска:
-  # svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read).parse
-  #
-  # Пример настройки:
-  # LoadMap.setup do |config|
-  #   [LoadMap::Line, LoadMap::Point].each do |tag_class|
-  #     config.known_tag_classes << tag_class
-  #   end
-  # end
+  # svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read, [LoadMap::Line, LoadMap::Point]).parse
   #
   # Пример использования результата
   # svg_parser.result['LoadMap::Line'][1]
@@ -34,10 +27,10 @@ module LoadMap
 
     attr_reader :result
 
-    def initialize(svg_string)
+    def initialize(svg_string, known_tag_classes)
       @svg_string = svg_string.gsub("\n", '')
       @result = {}
-      @known_tag_classes = LoadMap.known_tag_classes
+      @known_tag_classes = known_tag_classes
       @parser = build_parser
     end
 

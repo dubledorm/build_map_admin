@@ -4,15 +4,25 @@
 module LoadMap
   # сервис для загрузки маршрутов для конкретного помещения.
   class LoadRoads
+
+    KNOWN_TAG_CLASSES = [LoadMap::Line, LoadMap::Point].freeze
     def initialize(source_svg_path, source_xls_path)
       @source_svg_path = source_svg_path
       @source_xls_path = source_xls_path
     end
 
     def done
-      svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read).parse
-      @roads = Roads.build(svg_parser)
-      @targets = Targets.build(svg_parser)
+      svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read, KNOWN_TAG_CLASSES).parse
+      @targets = Targets.new(svg_parser.result['LoadMap::Point'], @source_xls_path)
+      @roads = Roads.new(svg_parser.result['LoadMap::Line'], self)
+    end
+
+    # Найти идентификатор точки в списке targets по переданным координатам
+    def find_point_id(point_x, point_y)
+      index = @targets.find_index { |target| target.inside_of_me?(point_x, point_y) }
+      raise LoadMap::SvgParserError, COULD_NOT_FIND_POINT_ID.call(point_x, point_y) unless index
+
+      @target[index].id
     end
 
     private

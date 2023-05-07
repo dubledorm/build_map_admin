@@ -5,13 +5,14 @@ module LoadMap
   # Класс для дополнения класса point дополнительной инфлормацией
   class Target
 
-    attr_reader :name, :description, :point_type, :point
+    attr_reader :id, :name, :description, :point_type, :point
 
-    delegate :id, to: :point
+    delegate :inside_of_me?, to: :point
 
     def initialize(point, line_hash)
       @point = point
-      line_hash.keys.excluding('id').each do |key|
+      @id = point.id || SecureRandom.uuid
+      line_hash&.keys&.excluding('id')&.each do |key|
         instance_variable_set("@#{key}", line_hash[key])
       end
     end
