@@ -15,12 +15,13 @@ module LoadMap
 
     def initialize(*several_variants, points, xls_file_path)
       super(*several_variants) do |y|
-        points.each do |point|
-          y << Target.new(point, find_xls_line(point.id))
+        @targets.each do |target|
+          y << target
         end
       end
 
       read_workbook(xls_file_path)
+      @targets = points.map { |point| Target.new(point, find_xls_line(point.id))}
     end
 
     def read_workbook(xls_file_path)

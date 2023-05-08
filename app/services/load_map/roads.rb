@@ -11,7 +11,7 @@ module LoadMap
   class Roads < Enumerator
     attr_reader :point_finder
 
-    delegate :find_point_id, to: :find_point_id
+    delegate :find_point_id, to: :point_finder
 
     COULD_NOT_FIND_POINT_ID = lambda { |x, y|
       "Не могу найти идентификатор точки для координат x = #{x}, y = #{y}"
