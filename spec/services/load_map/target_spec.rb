@@ -13,7 +13,7 @@ RSpec.describe LoadMap::Target do
 'stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5"/>'
   end
 
-  it { expect(described_class.new(LoadMap::Point.new(circle_example), nil).id).to eq('Point1') }
+  it { expect(described_class.new(LoadMap::Svg::Point.new(circle_example), nil).id).to eq('Point1') }
 
-  it { expect(described_class.new(LoadMap::Point.new(circle_without_id_example), nil).id).to_not be_nil }
+  it { expect(described_class.new(LoadMap::Svg::Point.new(circle_without_id_example), nil).id).to_not be_nil }
 end

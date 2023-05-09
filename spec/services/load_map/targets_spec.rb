@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe LoadMap::Targets do
   let(:xls_file_path) { 'spec/fixtures/BuildMapInfo.xlsx' }
   let(:map_with_roads) { File.open('spec/fixtures/map_with_roads.svg', 'r').read }
-  let(:svg_parser) { LoadMap::SvgParser.new(map_with_roads, [LoadMap::Line, LoadMap::Point]).parse }
-  let(:targets) { described_class.new(svg_parser.result['LoadMap::Point'], xls_file_path) }
+  let(:svg_parser) { LoadMap::Svg::SvgParser.new(map_with_roads, [LoadMap::Svg::Line, LoadMap::Svg::Point]).parse }
+  let(:targets) { described_class.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path) }
 
-  it { expect(described_class.new(svg_parser.result['LoadMap::Point'], xls_file_path ).xls_lines.count).to eq(5) }
-  it { expect(described_class.new(svg_parser.result['LoadMap::Point'], xls_file_path).xls_lines[4]).to eq({ 'description' => 'Пиво, чипсы, телевизоры', 'id' => 'Point5', 'name' => '"Всё для футбола"', 'point_type' => 'shop' }) }
+  it { expect(described_class.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path ).xls_lines.count).to eq(5) }
+  it { expect(described_class.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path).xls_lines[4]).to eq({ 'description' => 'Пиво, чипсы, телевизоры', 'id' => 'Point5', 'name' => '"Всё для футбола"', 'point_type' => 'shop' }) }
 
   it { expect(targets.next.id).to eq('Point1') }
   it { expect(targets.next.point_type).to eq('shop') }
@@ -31,8 +31,8 @@ RSpec.describe LoadMap::Targets do
   context 'when some id is absent' do
     let(:xls_file_path) { 'spec/fixtures/BuildMapInfo.xlsx' }
     let(:map_with_roads) { File.open('spec/fixtures/map_with_circles_without_id.svg', 'r').read }
-    let(:svg_parser) { LoadMap::SvgParser.new(map_with_roads, [LoadMap::Line, LoadMap::Point]).parse }
-    let(:targets) { described_class.new(svg_parser.result['LoadMap::Point'], xls_file_path) }
+    let(:svg_parser) { LoadMap::Svg::SvgParser.new(map_with_roads, [LoadMap::Svg::Line, LoadMap::Svg::Point]).parse }
+    let(:targets) { described_class.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path) }
 
     it { expect(targets.next.id).to_not be_nil }
   end

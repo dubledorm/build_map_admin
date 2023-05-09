@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LoadMap::Point do
+RSpec.describe LoadMap::Svg::Point do
   let(:circle_example) do
     '<circle cx="33.003893" cy="271.761704" fill="none" id="Point1" r="18.413111" stroke="#ea0e0e" '\
 'stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5"/>'

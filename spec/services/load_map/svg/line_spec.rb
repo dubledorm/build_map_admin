@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LoadMap::Line do
+RSpec.describe LoadMap::Svg::Line do
   let(:line_example) do
     '<line fill="none" id="svg_7" stroke="#ea0e0e" stroke-dasharray="null" stroke-linecap="null"'\
 ' stroke-linejoin="null" stroke-width="5" x1="37.003893" x2="567.003885" y1="271.261708" y2="271.261708"/>'

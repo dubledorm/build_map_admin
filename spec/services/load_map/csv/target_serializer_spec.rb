@@ -8,9 +8,9 @@ RSpec.describe LoadMap::Csv::TargetSerializer do
 'stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5"/>'
   end
 
-  let(:target) { LoadMap::Target.new(LoadMap::Point.new(circle_example), nil) }
+  let(:target) { LoadMap::Target.new(LoadMap::Svg::Point.new(circle_example), nil) }
   let(:target1) do
-    LoadMap::Target.new(LoadMap::Point.new(circle_example), { point_type: 'crossroads',
+    LoadMap::Target.new(LoadMap::Svg::Point.new(circle_example), { point_type: 'crossroads',
                                                               name: 'name',
                                                               description: 'some, description' })
   end

@@ -6,7 +6,7 @@ module LoadMap
   class LoadRoads
     attr_reader :targets, :roads
 
-    KNOWN_TAG_CLASSES = [LoadMap::Line, LoadMap::Point].freeze
+    KNOWN_TAG_CLASSES = [LoadMap::Svg::Line, LoadMap::Svg::Point].freeze
     def initialize(source_svg_path, source_xls_path, saver)
       @source_svg_path = source_svg_path
       @source_xls_path = source_xls_path
@@ -14,9 +14,9 @@ module LoadMap
     end
 
     def done
-      svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read, KNOWN_TAG_CLASSES).parse
-      @targets = Targets.new(svg_parser.result['LoadMap::Point'], @source_xls_path)
-      @roads = Roads.new(svg_parser.result['LoadMap::Line'], self)
+      svg_parser = LoadMap::Svg::SvgParser.new(File.open(@source_svg_path, 'r').read, KNOWN_TAG_CLASSES).parse
+      @targets = Targets.new(svg_parser.result['LoadMap::Svg::Point'], @source_xls_path)
+      @roads = Roads.new(svg_parser.result['LoadMap::Svg::Line'], self)
       save_result
     end
 

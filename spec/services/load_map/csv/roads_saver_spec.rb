@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe LoadMap::Csv::RoadsSaver do
   let(:map_with_roads) { File.open('spec/fixtures/map_with_roads.svg', 'r').read }
-  let(:svg_parser) { LoadMap::SvgParser.new(map_with_roads, [LoadMap::Line, LoadMap::Point]).parse }
-  let(:roads) { LoadMap::Roads.new(svg_parser.result['LoadMap::Line'], nil) }
+  let(:svg_parser) { LoadMap::Svg::SvgParser.new(map_with_roads, [LoadMap::Svg::Line, LoadMap::Svg::Point]).parse }
+  let(:roads) { LoadMap::Roads.new(svg_parser.result['LoadMap::Svg::Line'], nil) }
   let(:find_point_id_mocks) do
     [[35_003, 350_261, 'Point4'],
      [37_003, 271_261, 'Point1'],
