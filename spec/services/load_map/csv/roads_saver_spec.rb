@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe LoadMap::Csv::RoadsSaver do
+  let(:map_with_roads) { File.open('spec/fixtures/map_with_roads.svg', 'r').read }
+  let(:svg_parser) { LoadMap::SvgParser.new(map_with_roads, [LoadMap::Line, LoadMap::Point]).parse }
+  let(:roads) { LoadMap::Roads.new(svg_parser.result['LoadMap::Line'], nil) }
+  let(:find_point_id_mocks) do
+    [[35_003, 350_261, 'Point4'],
+     [37_003, 271_261, 'Point1'],
+     [567_003, 271_261, 'Point2'],
+     [570_003, 349_261, 'Point3'],
+     [29_003, 268_261, 'Point1'],
+     [294_003, 74_261, 'Point5'],
+     [566_003, 263_261, 'Point2'],
+     [296_003, 66_261, 'Point5']].freeze
+  end
+  let(:result_csv_file_path) { 'spec/fixtures/result_roads_csv_example.csv' }
+
+
+  before :each do
+    allow_any_instance_of(LoadMap::Roads).to receive(:find_point_id).and_raise(LoadMap::SvgParserError)
+    find_point_id_mocks.each do |example|
+      allow_any_instance_of(LoadMap::Roads).to receive(:find_point_id).with(example[0], example[1]).and_return(example[2])
+    end
+  end
+
+  it 'should write to file' do
+    ::Dir::Tmpname.create('roads_csv') do |file_path|
+      described_class.new(file_path).save(roads)
+      expect(File.open(file_path, 'r').read).to eq(File.open(result_csv_file_path, 'r').read)
+    end
+  end
+end

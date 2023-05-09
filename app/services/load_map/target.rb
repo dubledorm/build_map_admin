@@ -12,6 +12,7 @@ module LoadMap
     def initialize(point, line_hash)
       @point = point
       @id = point.id || SecureRandom.uuid
+      @point_type = 'crossroads'
       line_hash&.keys&.excluding('id')&.each do |key|
         instance_variable_set("@#{key}", line_hash[key])
       end

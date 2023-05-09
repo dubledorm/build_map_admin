@@ -7,16 +7,17 @@ module LoadMap
     attr_reader :targets, :roads
 
     KNOWN_TAG_CLASSES = [LoadMap::Line, LoadMap::Point].freeze
-    def initialize(source_svg_path, source_xls_path)
+    def initialize(source_svg_path, source_xls_path, saver)
       @source_svg_path = source_svg_path
       @source_xls_path = source_xls_path
+      @saver = saver
     end
 
     def done
       svg_parser = SvgParser.new(File.open(@source_svg_path, 'r').read, KNOWN_TAG_CLASSES).parse
       @targets = Targets.new(svg_parser.result['LoadMap::Point'], @source_xls_path)
       @roads = Roads.new(svg_parser.result['LoadMap::Line'], self)
-      byebug
+      save_result
     end
 
     # Найти идентификатор точки в списке targets по переданным координатам
@@ -28,7 +29,7 @@ module LoadMap
     private
 
     def save_result
-      LoadMap.saver_class.new(self).save
+      @saver.save(@roads, @targets)
     end
   end
 end
