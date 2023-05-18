@@ -82,9 +82,6 @@ gem 'draper'
 gem 'haml'
 gem 'has_scope'
 
-# TODO: удалить при переходе на ruby 3
-gem 'net-http'
-
 # TODO: удалить при переходе на rails >= 7.0.3.1
 gem 'psych', '< 4'
 

@@ -198,8 +198,6 @@ GEM
     mocha (2.0.2)
       ruby2_keywords (>= 0.0.5)
     msgpack (1.7.0)
-    net-http (0.3.2)
-      uri
     net-imap (0.3.4)
       date
       net-protocol
@@ -371,7 +369,6 @@ GEM
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
     unicode-display_width (2.4.2)
-    uri (0.12.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -420,7 +417,6 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   launchy
   mocha
-  net-http
   pg (>= 0.18, < 2.0)
   pry (~> 0.14)
   pry-byebug (~> 3.10)
