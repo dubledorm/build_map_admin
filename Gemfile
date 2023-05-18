@@ -29,16 +29,16 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :test do
-  gem "autotest"
-  gem "autotest-notification"
-  gem "autotest-rails-pure"
+  gem 'autotest'
+  gem 'autotest-notification'
+  gem 'autotest-rails-pure'
   gem 'capybara', '~> 2.18'
   gem 'database_cleaner'
-  gem "factory_girl_rails" , '~> 1.7.0'
-  gem "launchy"
-  gem "mocha", :require => false
+  gem 'factory_girl_rails' , '~> 1.7.0'
+  gem 'launchy'
+  gem 'mocha', :require => false
   gem 'ruby-prof'
-  gem "test-unit"
+  gem 'test-unit'
   gem 'webmock'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
@@ -81,6 +81,10 @@ gem 'devise'
 gem 'draper'
 gem 'haml'
 gem 'has_scope'
+
+# TODO: удалить при переходе на ruby 3
+gem 'net-http'
+
 gem 'rubyXL'
 
 
