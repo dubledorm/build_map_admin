@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
   describe 'factory' do
-    let!(:organization) { FactoryGirl.create :organization }
+    let!(:organization) { FactoryBot.create :organization }
 
     # Factories
     it { expect(organization).to be_valid }

@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module BuildMapAdmin
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
     config.i18n.default_locale = :ru
     I18n.config.enforce_available_locales = false
