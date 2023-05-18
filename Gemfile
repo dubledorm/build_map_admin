@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.0.6', '>= 6.0.6.1'
@@ -29,17 +29,17 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :test do
+  gem "autotest"
+  gem "autotest-notification"
+  gem "autotest-rails-pure"
+  gem 'capybara', '~> 2.18'
   gem 'database_cleaner'
   gem "factory_girl_rails" , '~> 1.7.0'
-  gem "test-unit"
-  gem "mocha", :require => false
-  gem 'capybara', '~> 2.18'
   gem "launchy"
-  gem "autotest"
-  gem "autotest-rails-pure"
-  gem "autotest-notification"
-  gem 'webmock'
+  gem "mocha", :require => false
   gem 'ruby-prof'
+  gem "test-unit"
+  gem 'webmock'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
@@ -49,18 +49,18 @@ group :development, :test do
   # Call 'bye_bug.rb' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
-  gem 'rspec-rails', '~> 4.0.0.rc1'
-  gem 'rails-controller-testing'
-  gem 'pry'
+  gem 'pry', '~>0.14'
+  gem 'pry-byebug', '~>3.10'
   gem 'pry-rails'
-  gem 'pry-byebug'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 4.0.0.rc1'
   # Call 'bye_bug.rb' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'
-  gem 'shoulda', '~> 3.5.0'
-  gem 'shoulda-matchers'
-  gem 'shoulda-context'
-  gem 'selenium-webdriver'
   gem 'rack_session_access'
+  gem 'selenium-webdriver'
+  gem 'shoulda', '~> 4.0'
+  gem 'shoulda-context', '~> 2.0'
+  gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
 end
 
@@ -69,19 +69,19 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   #  gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'spring', '~> 4.0'
+  gem 'spring-watcher-listen', '~> 2.1'
 end
 
-gem 'haml'
-gem 'draper'
-gem 'has_scope'
-gem 'awesome_print'
-gem 'rubyXL'
-gem 'devise'
 gem 'activeadmin'
+gem 'awesome_print'
+gem 'devise'
+gem 'draper'
+gem 'haml'
+gem 'has_scope'
+gem 'rubyXL'
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
