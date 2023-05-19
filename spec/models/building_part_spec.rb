@@ -15,5 +15,6 @@ RSpec.describe BuildingPart, type: :model do
     it { should belong_to(:organization) }
     it { should belong_to(:building) }
     it { should have_many(:points) }
+    it { should have_many(:roads) }
   end
 end

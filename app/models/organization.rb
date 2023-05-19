@@ -4,6 +4,6 @@
 class Organization < ApplicationRecord
   validates :name, presence: true
 
-  has_many :buildings
+  has_many :buildings, dependent: :destroy
   has_many :building_parts
 end

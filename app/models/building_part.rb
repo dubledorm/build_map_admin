@@ -6,5 +6,6 @@ class BuildingPart < ApplicationRecord
 
   belongs_to :organization
   belongs_to :building
-  has_many :points
+  has_many :points, dependent: :destroy
+  has_many :roads, dependent: :destroy
 end
