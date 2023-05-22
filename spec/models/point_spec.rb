@@ -22,7 +22,7 @@ RSpec.describe Point, type: :model do
 
   describe 'validations' do
     it { expect(FactoryBot.build(:point, point_type: 'target')).to be_valid }
-    it { expect(FactoryBot.build(:point, point_type: 'crossroad')).to be_valid }
+    it { expect(FactoryBot.build(:point, point_type: 'crossroads')).to be_valid }
     it { expect(FactoryBot.build(:point, point_type: 'another')).to_not be_valid }
   end
 end

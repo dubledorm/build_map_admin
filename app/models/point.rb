@@ -2,7 +2,7 @@
 
 # Запись об BuildingPart
 class Point < ApplicationRecord
-  POINT_TYPE_VALUES = %w[crossroad target].freeze
+  POINT_TYPE_VALUES = %w[crossroads target].freeze
 
   validates :x_value, :y_value, :point_type, presence: true
   validates :point_type, inclusion: { in: POINT_TYPE_VALUES }

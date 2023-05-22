@@ -21,7 +21,7 @@ module LoadMap
       end
 
       read_workbook(xls_file_path)
-      @targets = points.map { |point| Target.new(point, find_xls_line(point.id))}
+      @targets = points.map { |point| Target.new(point, find_xls_line(point.id)) }
     end
 
     def read_workbook(xls_file_path)

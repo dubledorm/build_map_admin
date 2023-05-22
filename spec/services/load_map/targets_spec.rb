@@ -12,7 +12,7 @@ RSpec.describe LoadMap::Targets do
   it { expect(described_class.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path).xls_lines[4]).to eq({ 'description' => 'Пиво, чипсы, телевизоры', 'id' => 'Point5', 'name' => '"Всё для футбола"', 'point_type' => 'shop' }) }
 
   it { expect(targets.next.id).to eq('Point1') }
-  it { expect(targets.next.point_type).to eq('shop') }
+  it { expect(targets.next.point_type).to eq('target') }
 
   it 'use some next calls' do
     targets.next

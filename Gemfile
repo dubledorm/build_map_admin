@@ -77,6 +77,7 @@ end
 
 gem 'activeadmin'
 gem 'awesome_print'
+gem 'cancancan'
 gem 'devise'
 gem 'draper'
 gem 'haml'

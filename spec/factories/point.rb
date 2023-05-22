@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:y_value) { |n| n }
     organization
     building_part
-    point_type { 'crossroad' }
+    point_type { 'crossroads' }
   end
 end
