@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_190201) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_190844) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_190201) do
     t.datetime "remember_created_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["organization_id"], name: "index_admin_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
@@ -95,6 +97,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_190201) do
     t.index ["point2_id"], name: "index_roads_on_point2_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.bigint "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_roles_on_admin_user_id"
+    t.index ["name"], name: "index_roles_on_name"
+  end
+
+  add_foreign_key "admin_users", "organizations"
   add_foreign_key "building_parts", "buildings"
   add_foreign_key "building_parts", "organizations"
   add_foreign_key "buildings", "organizations"

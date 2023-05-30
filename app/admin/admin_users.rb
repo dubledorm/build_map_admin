@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation
+  permit_params :email, :password, :password_confirmation, roles_attributes: %i[id name]
 
   index do
     selectable_column
@@ -22,7 +22,48 @@ ActiveAdmin.register AdminUser do
       f.input :password
       f.input :password_confirmation
     end
+
+    f.inputs do
+      f.has_many :roles, allow_destroy: true do |role|
+        role.input :name,
+                   as: :select,
+                   collection: RoleDecorator.translate_role_names
+      end
+    end
+
     f.actions
   end
 
+  show do
+    panel AdminUser.model_name.human do
+      attributes_table_for admin_user do
+        row :email
+        row :organization
+        row :reset_password_token
+        row :reset_password_sent_at
+        row :remember_created_at
+        row :created_at
+        row :updated_at
+      end
+    end
+
+    panel Role.model_name.human do
+      table_for resource.roles do
+        column :name do |role|
+          role.decorate.name
+        end
+      end
+    end
+  end
+
+  controller do
+    around_action :add_organization, only: :create
+
+    def add_organization
+      ActiveRecord::Base.transaction do
+        yield
+        resource.update(organization_id: current_admin_user.organization_id)
+      end
+    end
+  end
 end

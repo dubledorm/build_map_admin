@@ -6,4 +6,5 @@ class Organization < ApplicationRecord
 
   has_many :buildings, dependent: :destroy
   has_many :building_parts
+  has_many :admin_users, dependent: :destroy
 end

@@ -1,0 +1,8 @@
+ru:
+  role:
+    name:
+      client_owner: Клиент. Администратор
+      client_user: Клиент. Пользователь
+      system_manager: Менеджер клиентов
+      system_admin: Администратор
+      system_account_manager: Администратор пользователей
