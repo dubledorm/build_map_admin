@@ -59,6 +59,7 @@ ActiveAdmin.register AdminUser do
   controller do
     around_action :add_organization, only: :create
 
+    # Добавляем организацию для новых пользователей
     def add_organization
       ActiveRecord::Base.transaction do
         yield

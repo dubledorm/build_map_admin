@@ -2,7 +2,7 @@
 
 # Запись для сохранения данный о пользователи
 class AdminUser < ApplicationRecord
-  # Include default devise modules. Others available are:
+  # Include default custom_devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :registerable

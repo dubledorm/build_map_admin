@@ -1,0 +1,10 @@
+ru:
+  controllers:
+    custom_devise:
+      fill_organization_message: 'Заполните название организации'
+  operations:
+    client:
+      users:
+        services:
+          registration:
+            bad_admin_user: Не правильно заполнены поля в записи о пользователе
