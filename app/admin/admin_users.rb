@@ -19,17 +19,17 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs do
       f.input :email
-      f.input :password
-      f.input :password_confirmation
+      #     f.input :password
+      #    f.input :password_confirmation
     end
 
-    f.inputs do
-      f.has_many :roles, allow_destroy: true do |role|
-        role.input :name,
-                   as: :select,
-                   collection: RoleDecorator.translate_role_names
-      end
-    end
+    # f.inputs do
+    #   f.has_many :roles, allow_destroy: true do |role|
+    #     role.input :name,
+    #                as: :select,
+    #                collection: RoleDecorator.translate_role_names
+    #   end
+    # end
 
     f.actions
   end
@@ -57,14 +57,14 @@ ActiveAdmin.register AdminUser do
   end
 
   controller do
-    around_action :add_organization, only: :create
 
-    # Добавляем организацию для новых пользователей
-    def add_organization
-      ActiveRecord::Base.transaction do
-        yield
-        resource.update(organization_id: current_admin_user.organization_id)
-      end
+    def create
+      response = Client::Users::Services::AddUser.client_user(current_admin_user.organization_id,
+                                                              params.required(:admin_user).required(:email))
+      @resource = response.user
+      return render :new, alert: response.message unless response.success?
+
+      redirect_to admin_admin_user_path(id: @resource.id)
     end
   end
 end

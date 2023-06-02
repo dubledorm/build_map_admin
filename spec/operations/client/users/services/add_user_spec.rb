@@ -2,28 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe Client::Users::Services::Registration do
+RSpec.describe Client::Users::Services::AddUser do
   context 'when data is right' do
+    let!(:organization) { FactoryBot.create :organization }
     let(:subject) do
-      described_class.client_owner('some_name',
-                                   'k@k.ru',
-                                   '12345678',
-                                   '12345678')
+      described_class.client_user(organization.id, 'k@k.ru')
     end
 
     it { expect(subject.is_a?(Client::Users::Dto::RegistrationResponse)).to be_truthy }
     it { expect(subject.success?).to be_truthy }
     it { expect(subject.user.is_a?(AdminUser)).to be_truthy }
     it { expect { subject }.to change(AdminUser, :count).by(1) }
-    it { expect { subject }.to change(Organization, :count).by(1) }
+    it { expect { subject }.to change(Organization, :count).by(0) }
   end
 
   context 'when data is wrong' do
+    let!(:organization) { FactoryBot.create :organization }
     let(:subject) do
-      described_class.client_owner('some_name',
-                                   'k@k.ru',
-                                   '12345678',
-                                   'another')
+      described_class.client_user(organization.id, 'abrakadabra')
     end
 
     it { expect(subject.is_a?(Client::Users::Dto::RegistrationResponse)).to be_truthy }

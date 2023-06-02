@@ -1,4 +1,41 @@
 ru:
+  aliases:
+    _timestamps_alias: &default
+      id: Ид-р
+      created_at: Создан
+      updated_at: Изменён
+  activerecord:
+    models:
+      admin_user:
+        one: Пользователь
+        other: Пользователи
+      role: Права доступа
+      organization:
+        one: Организация
+        other: Организации
+    attributes:
+      admin_user:
+        email: Email
+        password: Пароль
+        organization: Название организации
+        password_confirmation: Подтверждение пароля
+        encrypted_password: Текущий пароль
+        reset_password_token: Токен для сброса пароля
+        reset_password_sent_at: Дата отправки сброса пароля
+        remember_created_at: Дата сохранения сессии
+        <<: *default
+      role:
+        name: Роль
+        <<: *default
+      organization:
+        name: Название
+        <<: *default
+    errors:
+      models:
+        admin_user:
+          attributes:
+            email:
+              taken: Пользователь с таким EMail уже существует
   activemodel:
     errors:
       models:
