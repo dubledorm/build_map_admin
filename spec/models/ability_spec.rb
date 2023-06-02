@@ -33,6 +33,7 @@ RSpec.describe Ability do
       it { expect(ability).to be_able_to(:manage, user_without_role_same_organization) }
       it { expect(ability).to_not be_able_to(:read, user_without_role) }
       it { expect(ability).to be_able_to(:read, user_without_role_same_organization) }
+      it { expect(ability).to_not be_able_to(:destroy, admin_user) }
     end
 
     context 'when user is a system_manager' do
@@ -66,6 +67,7 @@ RSpec.describe Ability do
       it { expect(ability).to be_able_to(:manage, user_without_role_same_organization) }
       it { expect(ability).to_not be_able_to(:read, user_without_role) }
       it { expect(ability).to be_able_to(:read, user_without_role_same_organization) }
+      it { expect(ability).to_not be_able_to(:destroy, admin_user) }
     end
   end
 

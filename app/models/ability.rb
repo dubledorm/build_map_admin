@@ -20,6 +20,8 @@ class Ability
       can [:read, :update], Organization, id: user.organization_id
     end
 
+    cannot :destroy, AdminUser, id: user.id # Нельзя удалить себя
+
     if user.role?(:system_admin)
       can :read, AdminUser
       can :read, Role
