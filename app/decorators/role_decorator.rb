@@ -9,8 +9,4 @@ class RoleDecorator < Draper::Decorator
   def name
     I18n.t("role.name.#{object.name || DEFAULT_NAME_VALUE}")
   end
-
-  def self.translate_role_names
-    Role::ROLE_NAMES.map { |name| [I18n.t("role.name.#{name || DEFAULT_NAME_VALUE}"), name] }
-  end
 end

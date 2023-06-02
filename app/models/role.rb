@@ -7,6 +7,7 @@ class Role < ApplicationRecord
   belongs_to :admin_user
 
   validates :name, presence: true, inclusion: { in: ROLE_NAMES }
+  validates :name, uniqueness: { scope: :admin_user }
 
   def organization_id
     admin_user.organization_id

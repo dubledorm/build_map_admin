@@ -36,6 +36,10 @@ ru:
           attributes:
             email:
               taken: Пользователь с таким EMail уже существует
+        role:
+          attributes:
+            name:
+              taken: У пользователя уже есть такая роль
   activemodel:
     errors:
       models:

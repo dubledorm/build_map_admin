@@ -25,4 +25,12 @@ FactoryBot.define do
   factory :client_owner, class: AdminUser, parent: :admin_user do
     roles { [association(:role, name: 'client_owner')] }
   end
+
+  factory :client_owner_client_user, class: AdminUser, parent: :admin_user do
+    roles { [association(:role, name: 'client_owner'), association(:role, name: 'client_user')] }
+  end
+
+  factory :client_owner_account_manager, class: AdminUser, parent: :admin_user do
+    roles { [association(:role, name: 'client_owner'), association(:role, name: 'system_account_manager')] }
+  end
 end

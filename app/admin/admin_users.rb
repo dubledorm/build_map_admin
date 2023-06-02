@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation, roles_attributes: %i[id name]
+  permit_params :email, :password, :password_confirmation, roles_attributes: %i[id name _destroy]
 
   index do
     selectable_column
@@ -19,17 +19,17 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs do
       f.input :email
-      #     f.input :password
-      #    f.input :password_confirmation
     end
 
-    # f.inputs do
-    #   f.has_many :roles, allow_destroy: true do |role|
-    #     role.input :name,
-    #                as: :select,
-    #                collection: RoleDecorator.translate_role_names
-    #   end
-    # end
+    unless params['action'] == 'new'
+      f.inputs do
+        f.has_many :roles, allow_destroy: true do |role|
+          role.input :name,
+                     as: :select,
+                     collection: accessible_roles(current_admin_user)
+        end
+      end
+    end
 
     f.actions
   end
