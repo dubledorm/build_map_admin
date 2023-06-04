@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rule_list/rule_list'
+require 'rule_list/rule_list_item'
 
 module Client
   module Users
@@ -22,7 +23,15 @@ module Client
           [RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteLastClientOwner,
                             I18n.t('operations.client.users.services.validate_update.CouldNotDeleteLastClientOwner')),
            RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteSelfClientOwner,
-                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteSelfClientOwner'))]
+                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteSelfClientOwner')),
+           RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteLastSystemAdmin,
+                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteLastSystemAdmin')),
+           RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteSelfSystemAdmin,
+                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteSelfSystemAdmin')),
+           RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteLastSystemAccountManager,
+                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteLastSystemAccountManager')),
+           RuleListItem.new(Client::Users::ValidateRules::CouldNotDeleteSelfSystemAccountManager,
+                            I18n.t('operations.client.users.services.validate_update.CouldNotDeleteSelfSystemAccountManager'))]
         ).freeze
 
         def initialize(params_admin_user, admin_user, current_user)
@@ -40,11 +49,11 @@ module Client
         private
 
         def parse_params(params_admin_user)
-          @deleted_roles = params_admin_user['roles_attributes'].to_enum.each_with_object([]) do |item, result|
+          @deleted_roles = params_admin_user['roles_attributes']&.to_enum&.each_with_object([]) do |item, result|
             next unless item[1]['_destroy'] == DESTROY_TRUE_FLAG
 
             result << role_to_hash(item)
-          end
+          end || []
         end
 
         def check_deleted_roles

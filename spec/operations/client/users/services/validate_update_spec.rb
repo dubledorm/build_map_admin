@@ -4,6 +4,25 @@ require 'rails_helper'
 require 'rule_list/rule_list_item'
 
 RSpec.describe Client::Users::Services::ValidateUpdate do
+  describe 'empty roles' do
+    let(:params_admin_user) do
+      { 'email' => 'client1@mail.ru' }
+    end
+    let(:client) { FactoryBot.create :client_owner_client_user, email: 'client1@mail.ru' }
+
+    let(:subject) do
+      described_class.new(params_admin_user, client, client)
+    end
+
+    it { expect(subject.valid?).to be_truthy }
+
+    it 'should fills array of errors' do
+      validator = subject
+      validator.valid?
+      expect(validator.errors).to eq([])
+    end
+  end
+
   describe 'deleted role' do
     let(:params_admin_user) do
       { 'email' => 'client1@mail.ru',

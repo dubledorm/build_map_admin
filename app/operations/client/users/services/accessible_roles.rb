@@ -6,7 +6,8 @@ module Client
       # Возвращает список ролей, которые может назначать текущий пользователь (в зависимости от его роли)
       class AccessibleRoles
         ROLES_MAP = { client_owner: %i[client_owner client_user],
-                      system_account_manager: %i[system_manager system_admin] }.freeze
+                      system_account_manager: %i[system_manager system_admin],
+                      system_admin: %i[system_account_manager] }.freeze
 
         def self.roles(admin_user)
           return [] unless admin_user

@@ -11,3 +11,7 @@ ru:
           validate_update:
             CouldNotDeleteLastClientOwner: 'Нельзя удалять последнего администратора организации'
             CouldNotDeleteSelfClientOwner: 'Нельзя самого себя лишить прав администратора'
+            CouldNotDeleteLastSystemAdmin: 'Нельзя удалять последнего системного администратора'
+            CouldNotDeleteSelfSystemAdmin: 'Нельзя самого себя лишить прав системного администратора'
+            CouldNotDeleteLastSystemAccountManager: 'Нельзя удалять последнего администратора пользователей'
+            CouldNotDeleteSelfSystemAccountManager: 'Нельзя самого себя лишить прав администратора пользователей'
