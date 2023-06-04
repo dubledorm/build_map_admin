@@ -66,5 +66,15 @@ ActiveAdmin.register AdminUser do
 
       redirect_to admin_admin_user_path(id: @resource.id)
     end
+
+    def update
+      validator = Client::Users::Services::ValidateUpdate.new(params.required(:admin_user),
+                                                              resource,
+                                                              current_admin_user)
+      return super if validator.valid?
+
+      flash[:error] = validator.errors.map { |error| error[:messages].join(', ') }.join(', ')
+      render :edit
+    end
   end
 end

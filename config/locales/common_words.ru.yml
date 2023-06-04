@@ -8,3 +8,6 @@ ru:
         services:
           registration:
             bad_admin_user: Не правильно заполнены поля в записи о пользователе
+          validate_update:
+            CouldNotDeleteLastClientOwner: 'Нельзя удалять последнего администратора организации'
+            CouldNotDeleteSelfClientOwner: 'Нельзя самого себя лишить прав администратора'
