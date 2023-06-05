@@ -62,12 +62,21 @@ RSpec.describe Ability do
       let(:admin_user) { FactoryBot.create :client_owner }
       let(:user_without_role) { FactoryBot.create :admin_user }
       let(:user_without_role_same_organization) { FactoryBot.create :admin_user, organization: admin_user.organization }
+      let(:self_building) { FactoryBot.create :building, organization: admin_user.organization }
+      let(:self_building_part) { FactoryBot.create :building_part, organization: admin_user.organization, building: self_building }
+      let(:alien_building) { FactoryBot.create :building }
+      let(:alien_building_part) { FactoryBot.create :building_part, organization: alien_building.organization, building: alien_building }
 
       it { expect(ability).to_not be_able_to(:manage, user_without_role) }
       it { expect(ability).to be_able_to(:manage, user_without_role_same_organization) }
       it { expect(ability).to_not be_able_to(:read, user_without_role) }
       it { expect(ability).to be_able_to(:read, user_without_role_same_organization) }
       it { expect(ability).to_not be_able_to(:destroy, admin_user) }
+
+      it { expect(ability).to be_able_to(:manage, self_building) }
+      it { expect(ability).to_not be_able_to(:read, alien_building) }
+      it { expect(ability).to be_able_to(:manage, self_building_part) }
+      it { expect(ability).to_not be_able_to(:read, alien_building_part) }
     end
   end
 

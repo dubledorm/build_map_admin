@@ -10,11 +10,11 @@ module Client
       # После выполнения функции valid? заполняет массив errors струкутурами hash вида:
       # { role: role_arguments, messages: }
       # где role_arguments это тоже hash:
-      #                          { role_name: item[1]['name'],
-      #                           role_id: item[1]['id'],
-      #                           organization_id: @admin_user.organization_id,
-      #                           user_id: @admin_user.id,
-      #                           current_user_id: @current_user.id }
+      #  { role_name: item[1]['name'],
+      #   role_id: item[1]['id'],
+      #   organization_id: @admin_user.organization_id,
+      #   user_id: @admin_user.id,
+      #   current_user_id: @current_user.id }
       class ValidateUpdate
         attr_reader :errors
 

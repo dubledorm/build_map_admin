@@ -17,4 +17,10 @@ RSpec.describe BuildingPart, type: :model do
     it { should have_many(:points) }
     it { should have_many(:roads) }
   end
+
+  describe 'state' do
+    it { expect(FactoryBot.build :building_part, state: 'draft').to be_valid }
+    it { expect(FactoryBot.build :building_part, state: 'working').to be_valid }
+    it { expect(FactoryBot.build :building_part, state: 'another').to_not be_valid }
+  end
 end

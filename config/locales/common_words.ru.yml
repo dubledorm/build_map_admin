@@ -1,4 +1,9 @@
 ru:
+  my_active_admin:
+    menu:
+      building_manage: Управление локациями
+    building:
+      show: Открыть
   controllers:
     custom_devise:
       fill_organization_message: 'Заполните название организации'

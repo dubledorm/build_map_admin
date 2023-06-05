@@ -2,7 +2,14 @@
 
 # Запись об BuildingPart
 class BuildingPart < ApplicationRecord
+  STATE_VALUES = %w[draft working].freeze
+
+  before_validation do
+    self.state ||= 'draft'
+  end
+
   validates :name, presence: true
+  validates :state, inclusion: { in: STATE_VALUES }
 
   belongs_to :organization
   belongs_to :building

@@ -4,6 +4,7 @@ ru:
       id: Ид-р
       created_at: Создан
       updated_at: Изменён
+      organization: Организация
   activerecord:
     models:
       admin_user:
@@ -13,16 +14,34 @@ ru:
       organization:
         one: Организация
         other: Организации
+      building:
+        one: Здание/Локация
+        other: Здания/Локации
+      building_part:
+        one: Этаж/Часть локации
+        other: Этажи/Части локации
     attributes:
       admin_user:
         email: Email
         password: Пароль
-        organization: Название организации
         password_confirmation: Подтверждение пароля
         encrypted_password: Текущий пароль
         reset_password_token: Токен для сброса пароля
         reset_password_sent_at: Дата отправки сброса пароля
         remember_created_at: Дата сохранения сессии
+        roles: Права пользователя
+        current_sign_in_at: Время последнего входа
+        sign_in_count: Счётчик входов
+        <<: *default
+      building:
+        name: Название
+        description: Описание
+        <<: *default
+      building_part:
+        name: Название
+        building: Здание
+        description: Описание
+        state: Состояние
         <<: *default
       role:
         name: Роль

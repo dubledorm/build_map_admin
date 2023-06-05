@@ -15,7 +15,7 @@ RSpec.describe Client::Users::Services::AccessibleRoles do
     it { expect(described_class.roles(client_user)).to eq([]) }
     it { expect(described_class.roles(system_account_manager)).to eq(%i[system_manager system_admin]) }
     it { expect(described_class.roles(system_manager)).to eq([]) }
-    it { expect(described_class.roles(system_admin)).to eq([]) }
+    it { expect(described_class.roles(system_admin)).to eq(%i[system_account_manager]) }
   end
 
   context 'when user has more one roles' do
