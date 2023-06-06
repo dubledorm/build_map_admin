@@ -71,6 +71,7 @@ ActiveAdmin.register AdminUser do
     end
 
     def update
+      # TODO: Здесь надо добавить транзакцию с уровнем repeatable_read
       validator = Client::Users::Services::ValidateUpdate.new(params.required(:admin_user),
                                                               resource,
                                                               current_admin_user)

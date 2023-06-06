@@ -6,6 +6,8 @@ ru:
       show: Открыть
     building_part:
       original_map: Карта
+      routes_updated_notice: Маршруты успешно обновлены
+      update_routes: Обновить маршруты
   controllers:
     custom_devise:
       fill_organization_message: 'Заполните название организации'
