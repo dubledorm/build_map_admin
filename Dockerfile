@@ -33,7 +33,9 @@ RUN apk add --update --no-cache \
 # Настройка переменных окружения для production
 ENV RAILS_ENV=production \
     RACK_ENV=production \
-    RAILS_SERVE_STATIC_FILES=true
+    RAILS_SERVE_STATIC_FILES=true \
+    NODE_OPTIONS=--openssl-legacy-provider \
+    SECRET_KEY_BASE=static
 
 
 RUN gem install bundler -v 2.3.26
@@ -47,12 +49,14 @@ COPY . ./
 
 RUN bundle install --without development test
 
+RUN rails webpacker:install
+
+
 #COPY package.json yarn.lock ./
 
 #RUN yarn install --check-files
 
-ENV NODE_OPTIONS=--openssl-legacy-provider
-RUN RAILS_ENV=production SECRET_KEY_BASE=static bundle exec ./bin/rake assets:precompile
+RUN RAILS_ENV=production bundle exec ./bin/rake assets:precompile
 
 # Установка часового пояса
 ENV TZ=Europe/Moscow
