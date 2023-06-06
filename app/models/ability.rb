@@ -20,6 +20,7 @@ class Ability
       can %i[read update], Organization, id: user.organization_id
       can :manage, Building, organization_id: user.organization_id
       can :manage, BuildingPart, organization_id: user.organization_id
+      can :manage, BuildingPartDecorator, organization_id: user.organization_id
     end
 
     cannot :destroy, AdminUser, id: user.id # Нельзя удалить себя
