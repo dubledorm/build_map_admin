@@ -1,6 +1,6 @@
 ActiveAdmin.register BuildingPart do
 
-  permit_params :building_id, :organization_id, :name, :description, :state
+  permit_params :building_id, :name, :description, :state
   filter :name
 
   decorate_with BuildingPartDecorator

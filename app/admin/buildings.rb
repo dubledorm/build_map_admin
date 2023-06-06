@@ -1,7 +1,7 @@
 ActiveAdmin.register Building do
   menu parent: :manage_building
-  permit_params :organization_id, :name, :description,
-                building_parts_attributes: %i[id building_id name description state organization_id _destroy]
+  permit_params :name, :description,
+                building_parts_attributes: %i[id building_id name description state _destroy]
   filter :name
 
   form title: Building.model_name.human do |f|
