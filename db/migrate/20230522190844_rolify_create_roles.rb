@@ -8,6 +8,5 @@ class RolifyCreateRoles < ActiveRecord::Migration[7.0]
     end
 
     add_index(:roles, :name)
-    add_index(:roles, :admin_user_id)
   end
 end
