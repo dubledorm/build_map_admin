@@ -1,7 +1,12 @@
 ActiveAdmin.register BuildingPart do
   permit_params :building_id, :name, :description, :state
   actions :index, :show, :edit, :update, :destroy
+  filter :building
   filter :name
+  filter :state, as: :check_boxes,
+                 collection: proc { BuildingPartDecorator.states }
+  filter :created_at
+  filter :updated_at
 
   decorate_with BuildingPartDecorator
 
