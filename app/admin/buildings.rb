@@ -8,14 +8,14 @@ ActiveAdmin.register Building do
     f.semantic_errors *f.object.errors
     inputs do
       f.input :name
-      f.input :description
+      f.input :description, as: :text
     end
 
 
     f.inputs do
       f.has_many :building_parts, allow_destroy: true do |building_part_form|
         building_part_form.input :name
-        building_part_form.input :description
+        building_part_form.input :description, as: :text
       end
     end
 
