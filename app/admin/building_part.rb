@@ -1,5 +1,5 @@
 ActiveAdmin.register BuildingPart do
-  permit_params :building_id, :name, :description, :state
+  permit_params :building_id, :name, :description, :state, :original_map
   actions :index, :show, :edit, :update, :destroy
   filter :building
   filter :name
@@ -28,8 +28,27 @@ ActiveAdmin.register BuildingPart do
       f.input :name
       f.input :description, as: :text
       f.input :state, as: :select, collection: BuildingPartDecorator.states
+      f.file_field :original_map
     end
 
     f.actions
+  end
+
+  show do
+    panel BuildingPart.model_name.human do
+      attributes_table_for building_part do
+        row :building
+        row :organization
+        row :name
+        row :state
+        row :description
+        row :created_at
+        row :updated_at
+      end
+    end
+
+    panel I18n.t('my_active_admin.building_part.original_map') do
+      external_svg(resource.original_map_normalize) if resource.original_map.attached?
+    end
   end
 end

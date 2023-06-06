@@ -4,6 +4,8 @@ ru:
       building_manage: Управление локациями
     building:
       show: Открыть
+    building_part:
+      original_map: Карта
   controllers:
     custom_devise:
       fill_organization_message: 'Заполните название организации'

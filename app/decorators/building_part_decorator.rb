@@ -13,4 +13,8 @@ class BuildingPartDecorator < Draper::Decorator
   def self.states
     BuildingPart::STATE_VALUES.map { |state_value| [I18n.t("building_part.state.#{state_value}"), state_value] }
   end
+
+  def original_map_normalize
+    Svg::NormalizeService.call(object.original_map.download)
+  end
 end

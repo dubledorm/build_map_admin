@@ -5,4 +5,8 @@ module ApplicationHelper
       [I18n.t("role.name.#{name || DEFAULT_NAME_VALUE}"), name]
     end
   end
+
+  def external_svg(svg_string)
+    raw svg_string
+  end
 end

@@ -42,6 +42,7 @@ ru:
         building: Здание
         description: Описание
         state: Состояние
+        original_map: Карта
         <<: *default
       role:
         name: Роль

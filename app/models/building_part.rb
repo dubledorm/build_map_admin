@@ -16,6 +16,8 @@ class BuildingPart < ApplicationRecord
   has_many :points, dependent: :destroy, before_add: :add_organization_to_point
   has_many :roads, dependent: :destroy, before_add: :add_organization_to_road
 
+  has_one_attached :original_map
+
   private
 
   def add_organization_to_point(point)
