@@ -14,6 +14,12 @@ ru:
       organization:
         one: Организация
         other: Организации
+      point:
+        one: Точка
+        other: Точки
+      road:
+        one: Дуга
+        other: Дуги
       building:
         one: Здание/Локация
         other: Здания/Локации
@@ -43,6 +49,16 @@ ru:
         description: Описание
         state: Состояние
         original_map: Карта
+        <<: *default
+      point:
+        name: Название
+        description: Описание
+        point_type: Тип
+        <<: *default
+      road:
+        point1: Точка1
+        point2: Точка2
+        weight: Вес дуги
         <<: *default
       role:
         name: Роль

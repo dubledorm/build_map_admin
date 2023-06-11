@@ -6,7 +6,7 @@ RSpec.describe LoadMap::LoadRoads do
   let(:svg_file_path) { 'spec/fixtures/map_with_roads.svg' }
   let(:xls_file_path) { 'spec/fixtures/BuildMapInfo.xlsx' }
   let(:saver) { double('saver') }
-  let(:roads_load) { described_class.new(svg_file_path, xls_file_path, saver) }
+  let(:roads_load) { described_class.build_from_file(svg_file_path, xls_file_path, saver) }
 
   describe 'build targets and roads' do
     before :each do

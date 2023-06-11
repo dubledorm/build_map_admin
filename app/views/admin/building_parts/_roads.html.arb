@@ -1,0 +1,10 @@
+panel Road.model_name.human do
+  table_for resource.roads do
+    column :id
+    column :point1_id
+    column :point2_id
+    column :weight
+    column :created_at
+    column :updated_at
+  end
+end

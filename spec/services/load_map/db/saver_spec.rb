@@ -6,7 +6,7 @@ RSpec.describe LoadMap::Db::Saver do
   let(:xls_file_path) { 'spec/fixtures/BuildMapInfo.xlsx' }
   let(:map_with_roads) { File.open('spec/fixtures/map_with_roads.svg', 'r').read }
   let(:svg_parser) { LoadMap::Svg::SvgParser.new(map_with_roads, [LoadMap::Svg::Line, LoadMap::Svg::Point]).parse }
-  let(:targets) { LoadMap::Targets.new(svg_parser.result['LoadMap::Svg::Point'], xls_file_path) }
+  let(:targets) { LoadMap::Targets.build_from_file(svg_parser.result['LoadMap::Svg::Point'], xls_file_path) }
   let(:roads) { LoadMap::Roads.new(svg_parser.result['LoadMap::Svg::Line'], nil) }
   let(:find_point_id_mocks) do
     [[35_003, 350_261, 'Point4'],

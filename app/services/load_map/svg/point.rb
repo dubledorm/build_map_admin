@@ -29,7 +29,7 @@ module LoadMap
 
       def tag_str_parse(str)
         m = str.match(REG_EXP_FIND_CIRCLE)
-        raise LoadMap::SvgParserError, "Строка #{str} должна соответствовать: #{REG_EXP_FIND_CIRCLE}" unless m
+        raise LoadMap::SvgParserError, "Строка #{str[0..250]} должна соответствовать: #{REG_EXP_FIND_CIRCLE}" unless m
 
         @content = m[:content]
         @length = m.end(0)

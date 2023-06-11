@@ -1,4 +1,13 @@
 ru:
+  building_part:
+    state:
+      draft: Черновик
+      working: Рабочая
+      undefined: Не определено
+  point:
+    point_type:
+      crossroads: Перекрёсток
+      target: Цель
   role:
     name:
       client_owner: Клиент. Администратор
@@ -6,8 +15,3 @@ ru:
       system_manager: Менеджер клиентов
       system_admin: Администратор
       system_account_manager: Администратор пользователей
-  building_part:
-    state:
-      draft: Черновик
-      working: Рабочая
-      undefined: Не определено

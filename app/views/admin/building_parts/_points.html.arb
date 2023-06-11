@@ -1,0 +1,10 @@
+panel Point.model_name.human do
+  table_for resource.points do
+    column :id
+    column :name
+    column :point_type
+    column :description
+    column :created_at
+    column :updated_at
+  end
+end

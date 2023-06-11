@@ -1,0 +1,26 @@
+panel BuildingPart.model_name.human do
+  attributes_table_for resource do
+    row :building
+    row :organization
+    row :name
+    row :state
+    row :description
+    row :created_at
+    row :updated_at
+  end
+end
+
+panel I18n.t('my_active_admin.new_update_routes.load_file_title') do
+    columns do
+      column max_width: '400px' do
+        active_admin_form_for  building_part_update_routes, url: update_routes_admin_building_part_path(id: resource.id) do |f|
+          f.file_field :routes_xls
+          actions
+        end
+      end
+      column do
+        text_node I18n.t('my_active_admin.new_update_routes.instruction').html_safe
+      end
+    end
+end
+

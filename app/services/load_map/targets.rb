@@ -13,20 +13,25 @@ module LoadMap
 
     attr_reader :xls_lines
 
-    def initialize(*several_variants, points, xls_file_path)
+    def initialize(*several_variants, points, xls_buffer)
       super(*several_variants) do |y|
         @targets.each do |target|
           y << target
         end
       end
 
-      read_workbook(xls_file_path)
+      read_workbook_from_buffer(xls_buffer)
       @targets = points.map { |point| Target.new(point, find_xls_line(point.id)) }
     end
 
-    def read_workbook(xls_file_path)
+    def self.build_from_file(*several_variants, points, xls_file_path)
+      xls_buffer = File.open(xls_file_path, 'rb', &:read)
+      new(*several_variants, points, xls_buffer)
+    end
+
+    def read_workbook_from_buffer(xls_buffer)
       @xls_lines = []
-      @workbook = RubyXL::Parser.parse(xls_file_path)
+      @workbook = RubyXL::Parser.parse_buffer(xls_buffer)
       @workbook.worksheets[0][1..].each do |row|
         @xls_lines << read_line(row)
       end
