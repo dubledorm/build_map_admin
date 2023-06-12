@@ -23,7 +23,9 @@ ru:
       unknown_tag_message: На уровне %{layer} в svg файле встретился неизвестный тег %{tag}
       roads_not_exists_message: В переданном файле отсутсвует уровень '%{layer}'
     svg:
-      parse_line_error: 'Ошибка разбора строки. Ошибка: #{message}. Строка:  %{line}.'
+      parse_line_error: 'Ошибка разбора строки. Ошибка: %{message}. Строка:  %{line}.'
+      point:
+        wrong_string: Строка должна соответствовать регулярному выражениею - '%{reg_exp}'. Строка - '%{line}'
   operations:
     client:
       users:

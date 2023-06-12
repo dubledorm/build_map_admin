@@ -22,7 +22,10 @@ module LoadMap
 
       def tag_str_parse(str)
         m = str.match(REG_EXP_FIND_LINE)
-        raise LoadMap::SvgParserError, "Строка #{str} должна соответствовать: #{REG_EXP_FIND_LINE}" unless m
+        unless m
+          raise LoadMap::SvgParserError, I18n.t('load_map.svg.point.wrong_string',
+                                                reg_exp: REG_EXP_FIND_LINE.source, line: str[0..250])
+        end
 
         @content = m[:content]
         @length = m.end(0)

@@ -13,7 +13,7 @@ module LoadMap
       REG_EXP_R = /r="(?<r>[^"]*)"/.freeze
       REG_EXP_ID = /id="(?<id>[^"]*)"/.freeze
       REG_EXP_FIND_CIRCLE = %r{^\s*<circle\s*(?<content>[^/]*)/>}.freeze
-      UNKNOWN_LENGTH_MESSAGE = 'Перед вызовом length должна быть вызвана функция tag_str_parse'
+
       def self.str_start_with_me?(str)
         str =~ REG_EXP_FIND_CIRCLE
       end
@@ -29,7 +29,10 @@ module LoadMap
 
       def tag_str_parse(str)
         m = str.match(REG_EXP_FIND_CIRCLE)
-        raise LoadMap::SvgParserError, "Строка #{str[0..250]} должна соответствовать: #{REG_EXP_FIND_CIRCLE}" unless m
+        unless m
+          raise LoadMap::SvgParserError, I18n.t('load_map.svg.point.wrong_string',
+                                                reg_exp: REG_EXP_FIND_CIRCLE.source, line: str[0..250])
+        end
 
         @content = m[:content]
         @length = m.end(0)
