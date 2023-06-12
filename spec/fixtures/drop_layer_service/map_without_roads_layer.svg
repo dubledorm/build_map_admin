@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+  <g class="layer">
+    <title>Background</title>
+    <line fill="none" id="svg_1" stroke="#000000" stroke-width="5" x1="34.003893" x2="115.003892" y1="170.261709" y2="59.261711"/>
+    <line fill="none" id="svg_2" stroke="#000000" stroke-width="5" x1="162.003899" x2="240.003898" y1="156.261975" y2="62.261976"/>
+    <line fill="none" id="svg_3" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5" x1="280.00389" x2="379.003888" y1="174.261709" y2="58.261711"/>
+    <line fill="none" id="svg_4" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5" x1="45.003893" x2="565.003885" y1="309.261707" y2="309.261707"/>
+    <line fill="none" id="svg_5" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="5" x1="39.003893" x2="567.003885" y1="240.261708" y2="243.261708"/>
+  </g>
+</svg>

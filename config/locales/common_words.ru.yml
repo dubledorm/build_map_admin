@@ -26,6 +26,9 @@ ru:
       parse_line_error: 'Ошибка разбора строки. Ошибка: %{message}. Строка:  %{line}.'
       point:
         wrong_string: Строка должна соответствовать регулярному выражениею - '%{reg_exp}'. Строка - '%{line}'
+  svg:
+    drop_layer_service:
+      dose_not_exists_end_of_tag: Не могу найти завершающего тега уровня - </g>
   operations:
     client:
       users:
