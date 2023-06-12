@@ -13,10 +13,6 @@ module LoadMap
 
     delegate :find_point_id, to: :point_finder
 
-    COULD_NOT_FIND_POINT_ID = lambda { |x, y|
-      "Не могу найти идентификатор точки для координат x = #{x}, y = #{y}"
-    }
-
     def initialize(*several_variants, lines, point_finder)
       super(*several_variants) do |y|
         lines.each do |line|

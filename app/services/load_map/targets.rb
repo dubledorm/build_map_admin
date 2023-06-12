@@ -38,7 +38,7 @@ module LoadMap
     end
 
     def read_line(row)
-      Hash[*row&.cells&.each_with_index&.map { |cell, index| [XLS_FIELDS_ORDER[index], cell.value] }.flatten]
+      Hash[*row&.cells&.each_with_index&.map { |cell, index| [XLS_FIELDS_ORDER[index], cell&.value] }.flatten]
     end
 
     def find_xls_line(id)

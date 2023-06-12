@@ -6,7 +6,13 @@ module LoadMap
   class LoadRoads
     attr_reader :targets, :roads
 
+    # Массив известных тегов
     KNOWN_TAG_CLASSES = [LoadMap::Svg::Line, LoadMap::Svg::Point].freeze
+
+    COULD_NOT_FIND_POINT_ID = lambda { |x, y|
+      I18n.t('load_map.load_roads.could_not_find_point_id', x:, y:)
+    }
+
     def initialize(source_svg, source_xls, saver)
       @source_svg = source_svg
       @source_xls = source_xls
@@ -29,7 +35,7 @@ module LoadMap
     # Найти идентификатор точки в списке targets по переданным координатам
     def find_point_id(point_x, point_y)
       @targets.each_entry { |target| return target.id if target.inside_of_me?(point_x, point_y) }
-      raise LoadMap::SvgParserError, Roads::COULD_NOT_FIND_POINT_ID.call(point_x, point_y)
+      raise LoadMap::SvgParserError, COULD_NOT_FIND_POINT_ID.call(point_x, point_y)
     end
 
     private

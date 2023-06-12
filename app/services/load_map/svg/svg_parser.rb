@@ -18,12 +18,13 @@ module LoadMap
     # Пример использования результата
     # svg_parser.result['LoadMap::Line'][1]
     class SvgParser
-      REG_EXP_FIND_LAYER = %r{<g class="layer">[^<]*<title>Roads</title>}.freeze
-      REG_EXP_FIND_END = %r{^\s*</g>}.freeze
+      ROADS_LAYER_NAME = 'Roads'
+      REG_EXP_FIND_LAYER = Regexp.new("<g class=\"layer\">[^<]*<title>#{ROADS_LAYER_NAME}</title>").freeze
+      REG_EXP_FIND_END = %r{^\s*</g>}
 
-      ROADS_NOT_EXIST_MESSAGE = 'В переданном файле отсутсвует уровень \'Roads\''
+      ROADS_NOT_EXIST_MESSAGE = -> { I18n.t('load_map.svg_parser.roads_not_exists_message', layer: ROADS_LAYER_NAME) }
       UNKNOWN_TAG_MESSAGE = lambda { |current_tag|
-        "На уровне 'Roads' в svg файле встретился неизвестный тег #{current_tag.content}"
+        I18n.t('load_map.svg_parser.unknown_tag_message', layer: ROADS_LAYER_NAME, tag: current_tag.content)
       }
 
       attr_reader :result
@@ -37,7 +38,7 @@ module LoadMap
 
       def parse
         start_pos_content = start_content_of_layer_tag(@svg_string)
-        raise SvgParserError, ROADS_NOT_EXIST_MESSAGE unless start_pos_content
+        raise SvgParserError, ROADS_NOT_EXIST_MESSAGE.call unless start_pos_content
 
         read_tags_in_layer_str(@svg_string[start_pos_content..])
         self

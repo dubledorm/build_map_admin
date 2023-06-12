@@ -10,7 +10,7 @@ module LoadMap
       def initialize(tag_str)
         tag_str_parse(tag_str)
       rescue StandardError => e
-        raise LoadMap::SvgParserError, "Ошибка разбора строки. Ошибка: #{e.message}. Строка:  #{tag_str[0..250]}."
+        raise LoadMap::SvgParserError, I18n.t('load_map.svg.parse_line_error', message: e.message, line: tag_str[0..250])
       end
 
       # Возвращает true если строка _str начинается с этого тега
@@ -39,6 +39,7 @@ module LoadMap
         parts = coordinate_str.split('.')
         parts << '0' if parts.size < 2
         parts[1] = parts[1][0..NORMALIZE_RANGE - 1]
+        (NORMALIZE_RANGE - parts[1].size).times { parts[1] += '0' }
         parts.join('').to_i
       end
     end
