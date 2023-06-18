@@ -15,3 +15,32 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+.point_crossroads {
+  stroke-width: 1;
+  fill: yellow;
+  stroke: #dd1616;
+}
+
+.point_target {
+  stroke-width: 1;
+  fill: blue;
+  stroke: #dd1616;
+}
+
+.point_current {
+  stroke-width: 2;
+  fill: green;
+  stroke: #dd1616;
+}
+
+.point_undefined {
+  stroke-width: 1;
+  fill: gray;
+  stroke: #dd1616;
+}
+
+.road_svg {
+  stroke-width: 1;
+  stroke: blue;
+}

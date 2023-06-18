@@ -1,3 +1,3 @@
-panel I18n.t('my_active_admin.building_part.original_map') do
+panel I18n.t('my_active_admin.building_part.immutable_map') do
   external_svg(resource.immutable_map.download) if resource.immutable_map.attached?
 end

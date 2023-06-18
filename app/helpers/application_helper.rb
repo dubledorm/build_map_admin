@@ -9,4 +9,13 @@ module ApplicationHelper
   def external_svg(svg_string)
     raw svg_string
   end
+
+  def smart_map(resource, current_point = nil)
+    return resource.original_map_normalize unless resource.immutable_map.attached?
+
+    map = resource.immutable_map.download
+    roads_layer = Svg::MakeRoadsLayerService.new(resource.points, resource.roads, current_point).make
+
+    Svg::AddRoadsLayerService.add(map, roads_layer)
+  end
 end

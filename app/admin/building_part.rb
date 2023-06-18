@@ -50,7 +50,7 @@ ActiveAdmin.register BuildingPart do
     end
 
     tabs do
-      tab I18n.t('my_active_admin.building_part.original_map') do
+      tab I18n.t('my_active_admin.building_part.map') do
         render 'original_map'
       end
       tab 'immutable_map' do

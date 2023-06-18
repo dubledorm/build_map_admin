@@ -5,14 +5,20 @@ ru:
     building:
       show: Открыть
     building_part:
-      original_map: Карта
+      original_map: Оригинальная карта
+      map: Карта
       routes_updated_notice: Маршруты успешно обновлены
       new_update_routes: Обновить маршруты
+      immutable_map: Карта помещения
+      points:
+        show: Открыть
     update_routes:
       confirm: Внимание, при выполнении этой операции, стираются уже существующие точки и дуги и создаются новые, на основании карты и xls файла с доп. информацией, который будет присоединён на следующем шаге
     new_update_routes:
       load_file_title: Выберите xls файл для загрузки дополнительных данных о точках
       instruction: Инструкция:</br>Выберите и загрузите xlsx файл с допоолнительной информацией по точкам.</br>Записи в xls файле должны находиться на 1-й странице, начиная со второй строки.</br>Порядок следования полей - Ид-р, тип точки(crossroads/target), название, описание
+    add_roads_layer_service:
+      not_found_layer: В svg файле должен присутствовать уровень с данными <g class="layer">. Не найдено завершающего тега уровня </g>
   controllers:
     custom_devise:
       fill_organization_message: 'Заполните название организации'

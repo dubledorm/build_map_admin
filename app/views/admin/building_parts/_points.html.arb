@@ -6,5 +6,8 @@ panel Point.model_name.human do
     column :description
     column :created_at
     column :updated_at
+    column '' do |point|
+      link_to I18n.t('my_active_admin.building_part.points.show'),  admin_point_path(id: point.id)
+    end
   end
 end

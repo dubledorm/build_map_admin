@@ -38,6 +38,7 @@ module Client
         end
 
         def add_immutable_map(immutable_map_buffer)
+          # TODO: Добавить удаление файла, если он уже был. И лучше сделать это в clear
           @building_part.immutable_map.attach(io: StringIO.new(immutable_map_buffer),
                                               filename: "immutable_map_#{@building_part.id}.svg",
                                               content_type: 'image/svg')
