@@ -6,8 +6,7 @@ module Client
       # Обновить таблицы маршрутов и точек в building_part, на основании плана помещения и переданного xls файла
       # Отделить в original_map план помещения от уровня маршрутов и записать его в immutable_map
       class UpdateRoutes
-        # TODO: Вынести в настройки(и в svg_parser тоже)
-        ROADS_LAYER_NAME = 'Roads'
+        ROADS_LAYER_NAME = Settings.svg_file.roads_layer_name
 
         def initialize(building_part, building_part_update_routes)
           @content_of_xls_file = building_part_update_routes.routes_xls.tempfile.read

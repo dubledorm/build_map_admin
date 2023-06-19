@@ -6,7 +6,7 @@ module LoadMap
     # Базовый класс для создания классов тегов
     class BaseTag
 
-      NORMALIZE_RANGE = 3 # До скольки знаков обрезать дробную часть координат
+      NORMALIZE_RANGE = Settings.svg_file.normalize_coordinate_limit # До скольки знаков обрезать дробную часть координат
       def initialize(tag_str)
         tag_str_parse(tag_str)
       rescue StandardError => e

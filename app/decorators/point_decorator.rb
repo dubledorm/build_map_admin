@@ -5,6 +5,7 @@ class PointDecorator < Draper::Decorator
   delegate_all
 
   DEFAULT_TYPE_VALUE = 'undefined'
+  NORMALIZE_RANGE = Settings.svg_file.normalize_coordinate_limit # До скольки знаков обрезать дробную часть координат
 
   def point_type
     I18n.t("point.point_type.#{object.point_type || DEFAULT_TYPE_VALUE}")
@@ -16,11 +17,11 @@ class PointDecorator < Draper::Decorator
 
   def x_value
     s_value = object.x_value.to_s
-    "#{s_value[0..-4]}.#{s_value[-3..]}"
+    "#{s_value[0..-NORMALIZE_RANGE - 1]}.#{s_value[-NORMALIZE_RANGE..]}"
   end
 
   def y_value
     s_value = object.y_value.to_s
-    "#{s_value[0..-4]}.#{s_value[-3..]}"
+    "#{s_value[0..-NORMALIZE_RANGE - 1]}.#{s_value[-NORMALIZE_RANGE..]}"
   end
 end

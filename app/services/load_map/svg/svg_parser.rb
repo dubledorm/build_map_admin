@@ -18,7 +18,7 @@ module LoadMap
     # Пример использования результата
     # svg_parser.result['LoadMap::Line'][1]
     class SvgParser
-      ROADS_LAYER_NAME = 'Roads' # TODO: Вынести в настройки
+      ROADS_LAYER_NAME = Settings.svg_file.roads_layer_name
       REG_EXP_FIND_LAYER = Regexp.new("<g class=\"layer\">[^<]*<title>#{ROADS_LAYER_NAME}</title>").freeze
       REG_EXP_FIND_END = %r{^\s*</g>}
 
