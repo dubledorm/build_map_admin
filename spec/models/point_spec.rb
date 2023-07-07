@@ -25,4 +25,12 @@ RSpec.describe Point, type: :model do
     it { expect(FactoryBot.build(:point, point_type: 'crossroads')).to be_valid }
     it { expect(FactoryBot.build(:point, point_type: 'another')).to_not be_valid }
   end
+
+  describe 'by_name scope' do
+    let!(:point1) { FactoryBot.create :point, name: 'первая точка' }
+    let!(:point2) { FactoryBot.create :point, name: 'вторая точка' }
+
+    it { expect(described_class.by_name('первая').count).to eq(1) }
+    it { expect(described_class.by_name('точка').count).to eq(2) }
+  end
 end

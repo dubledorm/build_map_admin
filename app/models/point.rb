@@ -11,4 +11,6 @@ class Point < ApplicationRecord
   belongs_to :building_part
   has_one :point1_roads, foreign_key: 'point1_id', class_name: 'Road'
   has_one :point2_roads, foreign_key: 'point2_id', class_name: 'Road'
+
+  scope :by_name, ->(name_part) { where('points.name like ?', "%#{sanitize_sql_like(name_part)}%") }
 end

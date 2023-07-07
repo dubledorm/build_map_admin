@@ -14,5 +14,6 @@ RSpec.describe Building, type: :model do
 
     it { should have_many(:building_parts) }
     it { should belong_to(:organization) }
+    it { should have_many(:points) }
   end
 end
