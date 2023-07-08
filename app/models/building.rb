@@ -7,8 +7,10 @@ class Building < ApplicationRecord
   belongs_to :organization
   has_many :building_parts, dependent: :destroy, before_add: :add_organization_to_building_part
   has_many :points, through: :building_parts
+  has_many :groups, dependent: :destroy
 
   accepts_nested_attributes_for :building_parts, allow_destroy: true
+  accepts_nested_attributes_for :groups, allow_destroy: true
 
   private
 

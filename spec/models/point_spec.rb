@@ -18,6 +18,7 @@ RSpec.describe Point, type: :model do
     it { should belong_to(:building_part) }
     it { should have_one(:point1_roads) }
     it { should have_one(:point2_roads) }
+    # it { should have_and_belongs_to_many(:groups) }
   end
 
   describe 'validations' do
@@ -32,5 +33,17 @@ RSpec.describe Point, type: :model do
 
     it { expect(described_class.by_name('первая').count).to eq(1) }
     it { expect(described_class.by_name('точка').count).to eq(2) }
+  end
+
+  describe 'groups' do
+    let!(:group) { FactoryBot.create :group }
+    let!(:point) { FactoryBot.create :point }
+
+    it 'should add group to collection' do
+      point.groups << group
+      point.reload
+
+      expect(point.groups.count).to eq(1)
+    end
   end
 end

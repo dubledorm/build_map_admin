@@ -10,6 +10,9 @@ ru:
       admin_user:
         one: Пользователь
         other: Пользователи
+      group:
+        one: Группа
+        other: Группы
       role: Права доступа
       organization:
         one: Организация
@@ -50,10 +53,16 @@ ru:
         state: Состояние
         original_map: Карта
         <<: *default
+      group:
+        name: Название
+        building: Здание
+        description: Описание
+        <<: *default
       point:
         name: Название
         description: Описание
         point_type: Тип
+        building_part: Этаж/Часть локации
         <<: *default
       road:
         point1: Точка1

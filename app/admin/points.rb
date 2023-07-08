@@ -1,5 +1,6 @@
 ActiveAdmin.register Point do
-  permit_params :name, :description, :point_type, :x_value, :y_value
+  permit_params :name, :description, :point_type, :x_value, :y_value,
+                group_ids: []
   decorate_with PointDecorator
 
   form title: Point.model_name.human do |f|
@@ -7,6 +8,7 @@ ActiveAdmin.register Point do
     inputs do
       f.input :name
       f.input :point_type, as: :select, collection: PointDecorator.point_types
+      f.input :groups, as: :select, input_html: { multiple: true }
       f.input :x_value
       f.input :y_value
       f.input :description, as: :text
@@ -27,6 +29,15 @@ ActiveAdmin.register Point do
         row :description
         row :created_at
         row :updated_at
+      end
+    end
+
+    panel Group.model_name.human do
+      table_for resource.groups do
+        column :name
+        column :description
+        column :created_at
+        column :updated_at
       end
     end
 
