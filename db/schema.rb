@@ -95,9 +95,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_08_074902) do
     t.string "name"
     t.string "description"
     t.bigint "building_id", null: false
+    t.bigint "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["building_id"], name: "index_groups_on_building_id"
+    t.index ["organization_id"], name: "index_groups_on_organization_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -159,6 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_08_074902) do
   add_foreign_key "building_parts", "organizations"
   add_foreign_key "buildings", "organizations"
   add_foreign_key "groups", "buildings"
+  add_foreign_key "groups", "organizations"
   add_foreign_key "points", "building_parts"
   add_foreign_key "points", "organizations"
   add_foreign_key "points_groups", "groups"

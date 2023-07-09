@@ -140,4 +140,19 @@ RSpec.describe Ability do
       it { expect(ability).to be_able_to(:read, user_the_same_organization.roles.first) }
     end
   end
+
+  describe Group do
+    let!(:organization) { FactoryBot.create :organization }
+    let!(:building) { FactoryBot.create :building, organization: }
+    let!(:organization1) { FactoryBot.create :organization }
+    let!(:building1) { FactoryBot.create :building, organization: organization1 }
+    let!(:group1) { FactoryBot.create :group, building: }
+    let!(:group2) { FactoryBot.create :group, building: building1 }
+
+    context 'when user is not authorise' do
+      it { expect(ability).to_not be_able_to(:read, Group.new) }
+      it { expect(ability).to_not be_able_to(:read, group1) }
+      it { expect(ability).to_not be_able_to(:read, group2) }
+    end
+  end
 end

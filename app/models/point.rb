@@ -17,4 +17,5 @@ class Point < ApplicationRecord
   accepts_nested_attributes_for :groups
 
   scope :by_name, ->(name_part) { where('points.name like ?', "%#{sanitize_sql_like(name_part)}%") }
+  scope :by_group, ->(group_id) { joins(:groups).where(groups: { id: group_id }) }
 end

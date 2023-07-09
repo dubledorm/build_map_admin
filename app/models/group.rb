@@ -7,4 +7,5 @@ class Group < ApplicationRecord
 
   belongs_to :building
   has_and_belongs_to_many :points, join_table: 'points_groups'
+  belongs_to :organization
 end

@@ -3,5 +3,6 @@ FactoryBot.define do
     sequence(:name) { |n| "name_#{n}" }
 
     building
+    organization
   end
 end

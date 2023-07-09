@@ -24,6 +24,7 @@ class Ability
       can :manage, Point, organization_id: user.organization_id
       can :manage, PointDecorator, organization_id: user.organization_id
       can :manage, Road, organization_id: user.organization_id
+      can :read, Group, organization_id: user.organization_id
     end
 
     cannot :destroy, AdminUser, id: user.id # Нельзя удалить себя
