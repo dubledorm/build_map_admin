@@ -87,6 +87,7 @@ gem 'has_scope'
 # TODO: удалить при переходе на rails >= 7.0.3.1
 gem 'psych', '< 4'
 
+gem 'rack-cors'
 gem 'rubyXL'
 
 
