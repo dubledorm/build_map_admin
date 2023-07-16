@@ -33,9 +33,9 @@ RSpec.describe WeightsMatrix do
   let(:subject) { described_class.new(RoadsAdapter::RoadsAdapter.new(roads_example, HashEntityBuilder)) }
 
   it do
-    expect(subject.weights_matrix).to eq([[0, 1, 1000, 4],
+    expect(subject.weights_matrix).to eq([[0, 1, PathFinderConst::UNAVAILABLE, 4],
                                           [1, 0, 2, 10],
-                                          [1000, 2, 0, 3],
+                                          [PathFinderConst::UNAVAILABLE, 2, 0, 3],
                                           [4, 10, 3, 0]])
   end
 

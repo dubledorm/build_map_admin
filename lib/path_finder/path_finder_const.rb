@@ -2,5 +2,5 @@
 
 module PathFinderConst
 
-  UNAVAILABLE = 1000
+  UNAVAILABLE = 100_000_000
 end
