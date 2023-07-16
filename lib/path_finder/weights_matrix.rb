@@ -4,7 +4,7 @@ require 'path_finder/path_finder_const'
 
 # Класс, формирующий матрицу весов из переданных маршрутов
 # и обеспечивающий доступ к весам по индексу - столбцу и колонке
-class WeightMatrix
+class WeightsMatrix
   include PathFinderConst
 
   attr_reader :weights_matrix, :dimension

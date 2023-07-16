@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'path_finder/weights_matrix'
+require 'path_finder/path_storage'
+
 # Класс для поиска маршрутов от точки к точке
 class PathFinder
   attr_reader :roads_adapter, :path_storage
@@ -7,8 +10,8 @@ class PathFinder
   delegate :find_point_index, to: :roads_adapter
 
   def initialize(roads_adapter)
-    @weight_matrix = WeightMatrix.new(roads_adapter)
     @roads_adapter = roads_adapter
+    @weights_matrix = WeightsMatrix.new(@roads_adapter)
     @path_storage = PathStorage.new(@roads_adapter)
   end
 
@@ -24,7 +27,7 @@ class PathFinder
   private
 
   def dimension
-    @weight_matrix.dimension
+    @weights_matrix.dimension
   end
 
   def init_find(start_index)
@@ -33,10 +36,10 @@ class PathFinder
 
     # Инициализируем массив результатов (копируем сюда стартовые веса)
     (0..dimension - 1).each do |index|
-      @result_weights[index] = @weights_matrix[start_index][index]
+      @result_weights[index] = @weights_matrix.weight(start_index, index)
 
       # Инициализируем массив маршрутов (копируем сюда первый переход из стартовой точки в существующего соседа)
-      next unless @result_weights[index] != UNAVAILABLE && @result_weights[index] != 0
+      next unless @result_weights[index] != PathFinderConst::UNAVAILABLE && @result_weights[index] != 0
 
       @path_storage.add(@roads_adapter.find_road_index(start_index, index, @result_weights[index]), index)
     end
@@ -47,7 +50,7 @@ class PathFinder
     @marks[start_index] = true
 
     while @marks.any?(false)
-      # Найти минимальный посчитанный маршрут среди не помеченных точек
+      # Найти маршрут минимального веса
       min_result_point_number = find_min_path_to_unmarked_point
       # Помечаем найденную вершину как посещённую
       @marks[min_result_point_number] = true
@@ -57,7 +60,7 @@ class PathFinder
     end
   end
 
-  # Найти минимальный посчитанный маршрут среди не помеченных точек
+  # Найти в @result_weights маршрут минимального веса ведущий в не пройденную точку
   def find_min_path_to_unmarked_point
     min_result_point_number = -1
     (0..dimension - 1).each do |number_in_result|
@@ -71,11 +74,11 @@ class PathFinder
     min_result_point_number
   end
 
-  # Проверяем, что от точки нет более короткого пути к уженайденным
+  # Проверяем, что от точки нет более короткого пути к уже найденным
   def check_old_paths(point_number)
     (0..dimension - 1).each do |number_in_result|
       new_weight = path_weight(point_number, number_in_result)
-      next unless @result_weights[number_in_result] > weight
+      next unless @result_weights[number_in_result] > new_weight
 
       @result_weights[number_in_result] = new_weight
       place_on_path_storage(number_in_result, point_number)
@@ -85,13 +88,13 @@ class PathFinder
   # Возвращает вес маршрута из точки current_index в точку number_in_result с учётом уже посчитанного маршрута в точку
   # number_in_result
   def path_weight(current_index, number_in_result)
-    @result_weights[current_index] + @weights_matrix[number_in_result][current_index]
+    @result_weights[current_index] + @weights_matrix.weight(current_index, number_in_result)
   end
 
   def place_on_path_storage(number_in_result, min_result_point_number)
     @path_storage.replace(number_in_result, @path_storage.paths[min_result_point_number])
     road_index = @roads_adapter.find_road_index(min_result_point_number, number_in_result,
-                                                @weights_matrix[min_result_point_number, number_in_result])
+                                                @weights_matrix.weight(min_result_point_number, number_in_result))
     @path_storage.add(road_index, number_in_result)
   end
 end

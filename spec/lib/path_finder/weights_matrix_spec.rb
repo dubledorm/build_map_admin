@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'path_finder/weight_matrix'
+require 'path_finder/weights_matrix'
 require 'path_finder/roads_adapter/roads_adapter'
 require 'support/hash_entity_builder'
 
-RSpec.describe WeightMatrix do
+RSpec.describe WeightsMatrix do
   let!(:roads_example) do
     [{ id: 101,
        point1_id: 10,
@@ -31,6 +31,13 @@ RSpec.describe WeightMatrix do
   DIMENSION = 4
 
   let(:subject) { described_class.new(RoadsAdapter::RoadsAdapter.new(roads_example, HashEntityBuilder)) }
+
+  it do
+    expect(subject.weights_matrix).to eq([[0, 1, 1000, 4],
+                                          [1, 0, 2, 10],
+                                          [1000, 2, 0, 3],
+                                          [4, 10, 3, 0]])
+  end
 
   it { expect(subject.weight(0, 0)).to eq(0) }
   it { expect(subject.weight(DIMENSION - 1, DIMENSION - 1)).to eq(0) }

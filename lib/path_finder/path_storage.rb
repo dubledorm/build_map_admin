@@ -5,16 +5,18 @@ class PathStorage
   attr_reader :paths
 
   def initialize(roads_adapter)
-    @paths = Enumerator.produce { [] }.take(dimension) # Сюда сохраняем маршруты
     @roads_adapter = roads_adapter # Маршруты, среди них будем искать по точкам и индексу
+    @paths = Enumerator.produce { [] }.take(dimension) # Сюда сохраняем маршруты
   end
 
+  # добавить индекс дуги в конец маршрута с индексом target_index
   def add(road_index, target_index)
     @paths[target_index] << road_index
   end
 
-  def replace(target_index, new_value)
-    paths[target_index] = new_value
+  # заменить маршрут в точку target_index на новый маршрут new_path
+  def replace(target_index, new_path)
+    paths[target_index] = new_path.dup
   end
 
   private
