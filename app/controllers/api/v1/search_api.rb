@@ -23,11 +23,9 @@ class Api
                                                           params[:start_point_id],
                                                           params[:end_point_id]).find
 
-          present response.path, with: Api::V1::Entities::SearchResult if response.success?
-          unless response.success?
-            present Api::V1::Entities::Error.new(code: 500, message: response.message),
-                    with: Api::V1::Entities::Error
-          end
+          error!({ message: response.message }, 500) unless response.success?
+
+          present response.path, with: Api::V1::Entities::SearchResult
         end
       end
     end
