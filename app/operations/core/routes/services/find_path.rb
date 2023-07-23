@@ -8,7 +8,7 @@ module Core
     module Services
       # Найти маршрут между двумя точками
       class FindPath
-        EXCEPT_FIELDS = %i[created_at updated_at organization_id building_part_id].freeze
+        EXCEPT_FIELDS = %i[created_at updated_at organization_id].freeze
 
         def initialize(building_id, start_point_id, end_point_id)
           @building_id = building_id
@@ -20,10 +20,11 @@ module Core
           init
           point_and_weight_array = build_point_and_weight_array(build_roads_fiber)
           points_hash = build_points_hash(point_and_weight_array)
-          point_and_weight_array.map do |point_and_weight|
+          result = point_and_weight_array.map do |point_and_weight|
             point_and_weight[:point] = points_hash.find { |point| point[:id] == point_and_weight[:point_id] }
             point_and_weight
           end
+          Core::Routes::Dto::FindPathResponse.success(result)
         rescue StandardError => e
           Core::Routes::Dto::FindPathResponse.error(e.message)
         end

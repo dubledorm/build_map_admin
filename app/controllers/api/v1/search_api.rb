@@ -19,10 +19,15 @@ class Api
           default [500, 'Внутрення ошибка сервера', 'Api::V1::Entities::Error']
         end
         get '/' do
-          present Core::Routes::Services::FindPath.new(@building.id,
-                                                       params[:start_point_id],
-                                                       params[:end_point_id]).find,
-                  with: Api::V1::Entities::SearchResult
+          response = Core::Routes::Services::FindPath.new(@building.id,
+                                                          params[:start_point_id],
+                                                          params[:end_point_id]).find
+
+          present response.path, with: Api::V1::Entities::SearchResult if response.success?
+          unless response.success?
+            present Api::V1::Entities::Error.new(code: 500, message: response.message),
+                    with: Api::V1::Entities::Error
+          end
         end
       end
     end
