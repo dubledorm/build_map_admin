@@ -24,7 +24,7 @@ class Api
         end
         get '/' do
           #{ 'declared_params' => declared(params) }
-          points = @building.points
+          points = @building.points.targets
           points = points.by_name(params[:filter][:target_name]) if params.dig(:filter, :target_name)
           points = points.by_group(params[:filter][:group_id]) if params.dig(:filter, :group_id)
           points = points.limit(params[:limit] || DEFAULT_LIMIT)
