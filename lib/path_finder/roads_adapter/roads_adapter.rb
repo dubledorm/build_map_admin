@@ -53,6 +53,11 @@ module RoadsAdapter
       road_entities[index].source_object
     end
 
+    # Вернуть id дуги по индексу.
+    def road_id(index)
+      road_entities[index].source_id
+    end
+
     private
 
     def add_points(point1_entity, point2_entity)

@@ -36,9 +36,9 @@ RSpec.describe PathFinder do
   let!(:subject) { described_class.new(RoadsAdapter::RoadsAdapter.new(roads_example, HashEntityBuilder)) }
 
   it { expect(subject.path_storage.paths).to eq([[], [], [], [], []]) }
-  it { expect(subject.find(10, 20)).to eq([0]) }
-  it { expect(subject.find(10, 30)).to eq([0, 1]) }
-  it { expect(subject.find(40, 20)).to eq([4]) }
+  it { expect(subject.find(10, 20)).to eq([101]) }
+  it { expect(subject.find(10, 30)).to eq([101, 102]) }
+  it { expect(subject.find(40, 20)).to eq([105]) }
   it { expect(subject.find(10, 10)).to eq([]) }
-  it { expect(subject.find(10, 50)).to eq([0, 1, 5]) }
+  it { expect(subject.find(10, 50)).to eq([101, 102, 106]) }
 end

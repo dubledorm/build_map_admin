@@ -21,7 +21,7 @@ class PathFinder
     init_find(start_index)
     calculate_all_paths(start_index)
 
-    @path_storage.paths[end_index]
+    @path_storage.paths[end_index].map { |road_index| @roads_adapter.road_id(road_index) }
   end
 
   private
