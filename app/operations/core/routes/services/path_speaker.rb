@@ -8,9 +8,11 @@ module Core
       class PathSpeaker
         attr_reader :legend, :user_direction, :map_direction, :length_m
 
+        NORMALIZE_RANGE = Settings.svg_file.normalize_coordinate_limit # До скольки знаков обрезать дробную часть координат
         DIRECTION_VALUES = %i[left right up down finish].freeze
         UP_CORNER_TN = 1 # Тангенс угла от оси Х до линии, отделяющей верхний сектор
-        DIVIDER_M = 10 # Делитель для перевода веса дуги в длину в метрах
+        # Делитель для перевода веса дуги в длину в метрах
+        DIVIDER_M =  Array.new(NORMALIZE_RANGE) { 10 }.inject(1) { |result, item| result * item } * 10
 
         # Массив для применения поправки на текущее направление
         CURRENT_DIRECTION_MAP = [{ current_direction: :up, direction: :up, result: :forward },
