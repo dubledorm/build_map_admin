@@ -88,10 +88,10 @@ RSpec.describe Core::Routes::Services::FindPath do
 
   describe 'find' do
     let!(:points) { FactoryBot.create_list :point, 10, building_part: }
-    let!(:road1) { FactoryBot.create :road, building_part:, point1_id: points[0].id, point2_id: points[1].id, weight: 10 }
-    let!(:road2) { FactoryBot.create :road, building_part:, point1_id: points[1].id, point2_id: points[2].id, weight: 20 }
-    let!(:road3) { FactoryBot.create :road, building_part:, point1_id: points[2].id, point2_id: points[3].id, weight: 30 }
-    let!(:road4) { FactoryBot.create :road, building_part:, point1_id: points[3].id, point2_id: points[4].id, weight: 40 }
+    let!(:road1) { FactoryBot.create :road, building_part:, point1_id: points[0].id, point2_id: points[1].id, weight: 10_000 }
+    let!(:road2) { FactoryBot.create :road, building_part:, point1_id: points[1].id, point2_id: points[2].id, weight: 20_000 }
+    let!(:road3) { FactoryBot.create :road, building_part:, point1_id: points[2].id, point2_id: points[3].id, weight: 30_000 }
+    let!(:road4) { FactoryBot.create :road, building_part:, point1_id: points[3].id, point2_id: points[4].id, weight: 40_000 }
     let(:subject) { described_class.new(building_part.building_id, points[0].id, points[4].id) }
 
     let(:result) do

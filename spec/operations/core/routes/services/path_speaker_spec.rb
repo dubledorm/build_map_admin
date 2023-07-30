@@ -44,7 +44,7 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
     let(:point1_hash) { point1.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
     let(:point2_hash) { point2.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
 
-    it { expect(described_class.new(point1_hash, point2_hash, 100, :up).length_m).to eq(10) }
+    it { expect(described_class.new(point1_hash, point2_hash, 100000, :up).length_m).to eq(10) }
   end
 
   describe 'legend' do
@@ -55,7 +55,7 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
 
     it do
       expect(described_class.new(point1_hash, point2_hash,
-                                 100, :up).legend).to eq('Поверните на право и пройдите 10 метров')
+                                 100000, :up).legend).to eq('Поверните на право и пройдите 10 метров')
 
     end
   end
