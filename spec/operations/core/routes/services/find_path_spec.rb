@@ -88,40 +88,44 @@ RSpec.describe Core::Routes::Services::FindPath do
 
   describe 'find' do
     let!(:points) { FactoryBot.create_list :point, 10, building_part: }
-    let!(:road1) { FactoryBot.create :road, building_part:, point1_id: points[0].id, point2_id: points[1].id, weight: 1 }
-    let!(:road2) { FactoryBot.create :road, building_part:, point1_id: points[1].id, point2_id: points[2].id, weight: 2 }
-    let!(:road3) { FactoryBot.create :road, building_part:, point1_id: points[2].id, point2_id: points[3].id, weight: 3 }
-    let!(:road4) { FactoryBot.create :road, building_part:, point1_id: points[3].id, point2_id: points[4].id, weight: 4 }
+    let!(:road1) { FactoryBot.create :road, building_part:, point1_id: points[0].id, point2_id: points[1].id, weight: 10 }
+    let!(:road2) { FactoryBot.create :road, building_part:, point1_id: points[1].id, point2_id: points[2].id, weight: 20 }
+    let!(:road3) { FactoryBot.create :road, building_part:, point1_id: points[2].id, point2_id: points[3].id, weight: 30 }
+    let!(:road4) { FactoryBot.create :road, building_part:, point1_id: points[3].id, point2_id: points[4].id, weight: 40 }
     let(:subject) { described_class.new(building_part.building_id, points[0].id, points[4].id) }
 
     let(:result) do
-      [{ point_id: points[0].id, weight: 1, point: { id: points[0].id, description: nil,
+      [{ point_id: points[0].id, weight: 1, point: { building_part_id: building_part.id,
+                                                     id: points[0].id, description: nil,
                                                      name: points[0].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[0].x_value, y_value: points[0].y_value } },
-       { point_id: points[1].id, weight: 2, point: { id: points[1].id, description: nil,
+       { point_id: points[1].id, weight: 2, point: { building_part_id: building_part.id,
+                                                     id: points[1].id, description: nil,
                                                      name: points[1].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[1].x_value, y_value: points[1].y_value } },
-       { point_id: points[2].id, weight: 3, point: { id: points[2].id, description: nil,
+       { point_id: points[2].id, weight: 3, point: { building_part_id: building_part.id,
+                                                     id: points[2].id, description: nil,
                                                      name: points[2].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[2].x_value, y_value: points[2].y_value } },
-       { point_id: points[3].id, weight: 4, point: { id: points[3].id, description: nil,
+       { point_id: points[3].id, weight: 4, point: { building_part_id: building_part.id,
+                                                     id: points[3].id, description: nil,
                                                      name: points[3].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[3].x_value, y_value: points[3].y_value } },
-       { point_id: points[4].id, weight: 0, point: { id: points[4].id, description: nil,
+       { point_id: points[4].id, weight: 0, point: { building_part_id: building_part.id,
+                                                     id: points[4].id, description: nil,
                                                      name: points[4].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[4].x_value, y_value: points[4].y_value } }]
     end
 
 
-    it { expect(subject.find.map { |item| item[:weight] }).to eq(result.map { |item| item[:weight] }) }
-    it { expect(subject.find.map { |item| item[:point_id] }).to eq(result.map { |item| item[:point_id] }) }
-    it { expect(subject.find[0][:point][:x_value]).to eq(result[0][:point][:x_value]) }
-    it { expect(subject.find[1][:point][:x_value]).to eq(result[1][:point][:x_value]) }
-    it { expect(subject.find).to eq(result) }
+    it { expect(subject.find.path.map { |item| item[:weight] }).to eq(result.map { |item| item[:weight] }) }
+    it { expect(subject.find.path.map { |item| item[:point_id] }).to eq(result.map { |item| item[:point_id] }) }
+    it { expect(subject.find.path[0][:point][:x_value]).to eq(result[0][:point][:x_value]) }
+    it { expect(subject.find.path[1][:point][:x_value]).to eq(result[1][:point][:x_value]) }
   end
 end

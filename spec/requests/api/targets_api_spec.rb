@@ -23,8 +23,8 @@ RSpec.describe Api::V1::TargetsApi, type: :request do
   context 'when points in two buildings' do
     let!(:building_part) { FactoryBot.create :building_part, building: }
     let!(:another_building_part) { FactoryBot.create :building_part, building: another_building }
-    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение' }
-    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение' }
+    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение', point_type: :target }
+    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение', point_type: :target }
     let!(:another_point1) { FactoryBot.create :point, building_part: another_building_part, name: 'Первая точка второе строение' }
     let!(:another_point2) { FactoryBot.create :point, building_part: another_building_part, name: 'Вторая точка второе строение' }
 
@@ -55,10 +55,10 @@ RSpec.describe Api::V1::TargetsApi, type: :request do
   context 'when points in one building but two floors' do
     let!(:building_part) { FactoryBot.create :building_part, building: }
     let!(:another_building_part) { FactoryBot.create :building_part, building: }
-    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение' }
-    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение' }
-    let!(:point21) { FactoryBot.create :point, building_part: another_building_part, name: 'Первая точка второй этаж' }
-    let!(:point22) { FactoryBot.create :point, building_part: another_building_part, name: 'Вторая точка второй этаж' }
+    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение', point_type: :target }
+    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение', point_type: :target }
+    let!(:point21) { FactoryBot.create :point, building_part: another_building_part, name: 'Первая точка второй этаж', point_type: :target }
+    let!(:point22) { FactoryBot.create :point, building_part: another_building_part, name: 'Вторая точка второй этаж', point_type: :target }
 
     it 'returns all points of all floors' do
       get "/v1/buildings/#{building.id}/targets", filter: {}
@@ -87,10 +87,10 @@ RSpec.describe Api::V1::TargetsApi, type: :request do
   context 'when some group exists' do
     let!(:building_part) { FactoryBot.create :building_part, building: }
     let!(:another_building_part) { FactoryBot.create :building_part, building: }
-    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение' }
-    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение' }
-    let!(:point21) { FactoryBot.create :point, building_part: another_building_part, name: 'Первая точка второй этаж' }
-    let!(:point22) { FactoryBot.create :point, building_part: another_building_part, name: 'Вторая точка второй этаж' }
+    let!(:point1) { FactoryBot.create :point, building_part:, name: 'Первая точка первое строение', point_type: :target }
+    let!(:point2) { FactoryBot.create :point, building_part:, name: 'Вторая точка первое строение', point_type: :target }
+    let!(:point21) { FactoryBot.create :point, building_part: another_building_part, name: 'Первая точка второй этаж', point_type: :target }
+    let!(:point22) { FactoryBot.create :point, building_part: another_building_part, name: 'Вторая точка второй этаж', point_type: :target }
     let!(:group1) { FactoryBot.create :group, building:, name: 'Группа 1' }
     let!(:group2) { FactoryBot.create :group, building:, name: 'Группа 2' }
 

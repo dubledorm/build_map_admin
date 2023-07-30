@@ -25,6 +25,8 @@ services:
       - db
     links:
       - db
+    volumes:
+      - ./file_store:/app/storage
     environment:
       RAILS_ENV: 'production'
       RACK_ENV: 'production'
