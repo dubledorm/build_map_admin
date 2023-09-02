@@ -32,8 +32,8 @@ module LoadMap
     def read_workbook_from_buffer(xls_buffer)
       @xls_lines = []
       @workbook = RubyXL::Parser.parse_buffer(xls_buffer)
-      @workbook.worksheets[0][1..].each do |row|
-        @xls_lines << read_line(row)
+      @workbook.worksheets[0][0..].each_with_index do |row, index|
+        @xls_lines << read_line(row) if index.positive?
       end
     end
 

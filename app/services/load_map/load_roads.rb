@@ -14,6 +14,7 @@ module LoadMap
     }
 
     def initialize(source_svg, source_xls, saver)
+      raise ArgumentError, I18n.t('load_map.load_roads.source_svg_should_be_present') unless source_svg
       @source_svg = source_svg
       @source_xls = source_xls
       @saver = saver

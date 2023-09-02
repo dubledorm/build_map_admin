@@ -25,6 +25,7 @@ ru:
   load_map:
     load_roads:
       could_not_find_point_id: Не могу найти идентификатор точки для координат x = %{x}, y = %{y}
+      source_svg_should_be_present: 'Необходимо загрузить svg файл карты этажа/части локации'
     svg_parser:
       unknown_tag_message: На уровне %{layer} в svg файле встретился неизвестный тег %{tag}
       roads_not_exists_message: В переданном файле отсутсвует уровень '%{layer}'
