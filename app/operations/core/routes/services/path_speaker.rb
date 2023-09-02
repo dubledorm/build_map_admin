@@ -12,7 +12,7 @@ module Core
         DIRECTION_VALUES = %i[left right up down finish].freeze
         UP_CORNER_TN = 1 # Тангенс угла от оси Х до линии, отделяющей верхний сектор
         # Делитель для перевода веса дуги в длину в метрах
-        DIVIDER_M =  Array.new(NORMALIZE_RANGE) { 10 }.inject(1) { |result, item| result * item } * 10
+        DIVIDER_M =  Array.new(NORMALIZE_RANGE) { 10 }.inject(1) { |result, item| result * item }
 
         # Массив для применения поправки на текущее направление
         CURRENT_DIRECTION_MAP = [{ current_direction: :up, direction: :up, result: :forward },
@@ -37,11 +37,11 @@ module Core
                        left: ->(length) { "Поверните на лево и пройдите #{length} метров" },
                        backward: ->(length) { "Поверните назад и пройдите #{length} метров" },
                        finish: ->(_) { 'Вы пришли' } }.freeze
-        def initialize(point1_hash, point2_hash, weight, current_direction)
+        def initialize(point1_hash, point2_hash, weight, current_direction, map_scale)
           @point1_hash = point1_hash
           @point2_hash = point2_hash
           @current_direction = current_direction
-          @length_m = weight / DIVIDER_M
+          @length_m = weight / (DIVIDER_M * map_scale)
           @legend = LEGEND_MAP[user_direction]&.call(@length_m)
         end
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register BuildingPart do
-  permit_params :building_id, :name, :description, :state, :original_map, :building_part_update_routes
+  permit_params :building_id, :name, :description, :state, :original_map, :map_scale, :building_part_update_routes
   actions :index, :show, :edit, :update, :destroy
   filter :building
   filter :name
@@ -31,6 +31,7 @@ ActiveAdmin.register BuildingPart do
       panel I18n.t('my_active_admin.building_part.original_map') do
         f.file_field :original_map
       end
+      f.input :map_scale
     end
 
     f.actions
@@ -44,6 +45,7 @@ ActiveAdmin.register BuildingPart do
         row :name
         row :state
         row :description
+        row :map_scale
         row :created_at
         row :updated_at
       end

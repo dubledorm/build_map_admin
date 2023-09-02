@@ -53,7 +53,8 @@ module Core
 
         def fill_legend(point_and_weight1, point_and_weight2, current_direction)
           path_speaker = PathSpeaker.new(point_and_weight1[:point], point_and_weight2&.dig(:point),
-                                         point_and_weight1[:weight], current_direction)
+                                         point_and_weight1[:weight], current_direction,
+                                         BuildingPart.find(point_and_weight1[:point][:building_part_id]).map_scale)
           point_and_weight1[:legend] = path_speaker.legend
           point_and_weight1[:direction] = path_speaker.user_direction
           point_and_weight1[:weight] = path_speaker.length_m

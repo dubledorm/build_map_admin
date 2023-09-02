@@ -32,7 +32,7 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
         point1_hash = point1.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys
         point2_hash = point2.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys
 
-        expect(described_class.new(point1_hash, point2_hash, 10, example[:current_direction])
+        expect(described_class.new(point1_hash, point2_hash, 10, example[:current_direction], 10)
                               .user_direction).to eq(example[:result])
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
     let(:point1_hash) { point1.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
     let(:point2_hash) { point2.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
 
-    it { expect(described_class.new(point1_hash, point2_hash, 100000, :up).length_m).to eq(10) }
+    it { expect(described_class.new(point1_hash, point2_hash, 100000, :up, 10).length_m).to eq(10) }
   end
 
   describe 'legend' do
@@ -55,8 +55,9 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
 
     it do
       expect(described_class.new(point1_hash, point2_hash,
-                                 100000, :up).legend).to eq('Поверните на право и пройдите 10 метров')
-
+                                 100000, :up, 10).legend).to eq('Поверните на право и пройдите 10 метров')
+      expect(described_class.new(point1_hash, point2_hash,
+                                 100000, :up, 100).legend).to eq('Поверните на право и пройдите 1 метров')
     end
   end
 
@@ -66,7 +67,7 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
 
     it do
       expect(described_class.new(point1_hash, nil,
-                                 100, :up).legend).to eq('Вы пришли')
+                                 100, :up, 10).legend).to eq('Вы пришли')
 
     end
   end

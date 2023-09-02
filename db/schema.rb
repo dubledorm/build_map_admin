@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_08_074902) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_02_114627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_08_074902) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "map_scale", default: 10
     t.index ["building_id"], name: "index_building_parts_on_building_id"
     t.index ["organization_id"], name: "index_building_parts_on_organization_id"
   end

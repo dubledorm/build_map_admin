@@ -10,6 +10,7 @@ class BuildingPart < ApplicationRecord
 
   validates :name, presence: true
   validates :state, inclusion: { in: STATE_VALUES }
+  validates :map_scale, numericality: { only_integer: true, greater_than: 0 }
 
   belongs_to :organization
   belongs_to :building

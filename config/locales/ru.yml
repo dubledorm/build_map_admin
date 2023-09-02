@@ -52,6 +52,7 @@ ru:
         description: Описание
         state: Состояние
         original_map: Карта
+        map_scale: Масштаб карты (точек/метр)
         <<: *default
       group:
         name: Название
@@ -85,6 +86,12 @@ ru:
           attributes:
             name:
               taken: У пользователя уже есть такая роль
+        building_part:
+          attributes:
+            map_scale:
+              greater_than: Значение масштаба карты должно быть больше 0
+              not_a_number: Значение масштаба карты должно быть целым положительным числом
+              not_an_integer: Значение масштаба карты должно быть целым положительным числом
   activemodel:
     errors:
       models:
