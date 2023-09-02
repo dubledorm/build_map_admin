@@ -13,8 +13,8 @@ class BuildingPart < ApplicationRecord
 
   belongs_to :organization
   belongs_to :building
-  has_many :points, dependent: :destroy, before_add: :add_organization_to_point
   has_many :roads, dependent: :destroy, before_add: :add_organization_to_road
+  has_many :points, dependent: :destroy, before_add: :add_organization_to_point
 
   has_one_attached :original_map # Карта с маршрутами
   has_one_attached :immutable_map # Карта без маршрутов
