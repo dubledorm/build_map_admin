@@ -42,7 +42,12 @@ module Core
           @point2_hash = point2_hash
           @current_direction = current_direction
           @length_m = weight / (DIVIDER_M * map_scale)
-          @legend = LEGEND_MAP[user_direction]&.call(@length_m)
+        end
+
+        def self.build_without_map_scale(point1_hash, point2_hash, weight, current_direction)
+          result = PathSpeaker.new(point1_hash, point2_hash, weight, current_direction, 1)
+          result.instance_variable_set(:@length_m, weight)
+          result
         end
 
         def map_direction
@@ -51,6 +56,10 @@ module Core
 
         def user_direction
           @user_direction ||= direction_map(map_direction)
+        end
+
+        def legend
+          @legend ||= LEGEND_MAP[user_direction]&.call(@length_m)
         end
 
         private

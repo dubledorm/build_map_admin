@@ -24,7 +24,7 @@ module Core
             point_and_weight[:point] = points_hash.find { |point| point[:id] == point_and_weight[:point_id] }
             point_and_weight
           end
-          Core::Routes::Dto::FindPathResponse.success(add_legend(result))
+          Core::Routes::Dto::FindPathResponse.success(aggregate_steps(add_legend(result)))
         rescue StandardError => e
           Core::Routes::Dto::FindPathResponse.error(e.message)
         end
@@ -58,7 +58,22 @@ module Core
           point_and_weight1[:legend] = path_speaker.legend
           point_and_weight1[:direction] = path_speaker.user_direction
           point_and_weight1[:weight] = path_speaker.length_m
+          point_and_weight1[:map_direction] = path_speaker.map_direction
           path_speaker.map_direction
+        end
+
+        def aggregate_steps(point_and_weight_array)
+          point_and_weight_array.each_with_object([]) do |point_end_weight, queue|
+            if queue.empty? || point_end_weight[:direction] != :forward || queue[-1][:direction] != :forward
+              queue << point_end_weight
+              next
+            end
+
+            queue[-1][:weight] += point_end_weight[:weight]
+            path_speaker = PathSpeaker.build_without_map_scale(queue[-1][:point], point_end_weight[:point],
+                                                               queue[-1][:weight], queue[-1][:map_direction])
+            queue[-1][:legend] = path_speaker.legend
+          end
         end
 
         def build_points_hash(point_and_weight_array)

@@ -122,6 +122,11 @@ RSpec.describe Core::Routes::Services::FindPath do
                                                      x_value: points[4].x_value, y_value: points[4].y_value } }]
     end
 
+    before :each do
+      allow_any_instance_of(described_class).to receive(:aggregate_steps).and_wrap_original do |_original_method, *args, &_block|
+        args[0]
+      end
+    end
 
     it { expect(subject.find.path.map { |item| item[:weight] }).to eq(result.map { |item| item[:weight] }) }
     it { expect(subject.find.path.map { |item| item[:point_id] }).to eq(result.map { |item| item[:point_id] }) }
