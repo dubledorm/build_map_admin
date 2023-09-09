@@ -46,4 +46,11 @@ RSpec.describe Point, type: :model do
       expect(point.groups.count).to eq(1)
     end
   end
+
+  describe 'label_direction' do
+    let!(:point) { FactoryBot.create :point }
+    let!(:point_label) { FactoryBot.create :point, label_direction: :up }
+
+    it { expect(described_class.qr_code_labels.count).to eq(1) }
+  end
 end

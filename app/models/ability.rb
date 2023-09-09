@@ -12,6 +12,8 @@ class Ability
     if user.role?(:system_account_manager)
       can :manage, AdminUser, organization_id: user.organization_id
       can :manage, Role, organization_id: user.organization_id
+      can :manage, LabelTemplate
+      can :manage, LabelTemplateDecorator
     end
 
     if user.role?(:client_owner)

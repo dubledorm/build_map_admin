@@ -14,6 +14,9 @@ ru:
         one: Группа
         other: Группы
       role: Права доступа
+      label_template:
+        one: Шаблон этикеток
+        other: Шаблоны этикеток
       organization:
         one: Организация
         other: Организации
@@ -64,6 +67,7 @@ ru:
         description: Описание
         point_type: Тип
         building_part: Этаж/Часть локации
+        label_direction: Qr код (направление, существование)
         <<: *default
       road:
         point1: Точка1
@@ -72,6 +76,12 @@ ru:
         <<: *default
       role:
         name: Роль
+        <<: *default
+      label_template:
+        name: Название
+        template_type: Тип шаблона
+        description: Описание
+        relation_name: Связующее имя
         <<: *default
       organization:
         name: Название

@@ -70,9 +70,9 @@ module Core
             end
 
             queue[-1][:weight] += point_end_weight[:weight]
-            path_speaker = PathSpeaker.build_without_map_scale(queue[-1][:point], point_end_weight[:point],
-                                                               queue[-1][:weight], queue[-1][:map_direction])
-            queue[-1][:legend] = path_speaker.legend
+            queue[-1][:legend] = PathSpeaker.build_without_map_scale(queue[-1][:point], point_end_weight[:point],
+                                                                     queue[-1][:weight], queue[-1][:map_direction])
+                                            .legend
           end
         end
 

@@ -3,9 +3,11 @@
 # Запись об BuildingPart
 class Point < ApplicationRecord
   POINT_TYPE_VALUES = %w[crossroads target].freeze
+  LABEL_DIRECTION_VALUES = %w[none up down left right].freeze
 
   validates :x_value, :y_value, :point_type, presence: true
   validates :point_type, inclusion: { in: POINT_TYPE_VALUES }
+  validates :label_direction, inclusion: { in: LABEL_DIRECTION_VALUES }
 
   belongs_to :organization
   belongs_to :building_part
@@ -19,4 +21,5 @@ class Point < ApplicationRecord
   scope :by_name, ->(name_part) { where('points.name like ?', "%#{sanitize_sql_like(name_part)}%") }
   scope :by_group, ->(group_id) { joins(:groups).where(groups: { id: group_id }) }
   scope :targets, -> { where(point_type: :target) }
+  scope :qr_code_labels, -> { where('points.label_direction <> ?', 'none') }
 end

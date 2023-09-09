@@ -1,5 +1,5 @@
 ActiveAdmin.register Point do
-  permit_params :name, :description, :point_type, :x_value, :y_value,
+  permit_params :name, :description, :point_type, :x_value, :y_value, :label_direction,
                 group_ids: []
   decorate_with PointDecorator
 
@@ -12,6 +12,7 @@ ActiveAdmin.register Point do
       f.input :x_value
       f.input :y_value
       f.input :description, as: :text
+      f.input :label_direction, as: :select, collection: PointDecorator.label_directions
     end
 
     f.actions
@@ -27,6 +28,7 @@ ActiveAdmin.register Point do
         row :x_value
         row :y_value
         row :description
+        row :label_direction
         row :created_at
         row :updated_at
       end

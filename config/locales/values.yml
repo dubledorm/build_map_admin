@@ -4,10 +4,21 @@ ru:
       draft: Черновик
       working: Рабочая
       undefined: Не определено
+  label_template:
+    template_type:
+      undefined: 1
+      single: Одна этикетка
+      multiple: Много этикеток
   point:
     point_type:
       crossroads: Перекрёсток
       target: Цель
+    label_direction:
+      none: Нет
+      up: Вверх
+      down: Вниз
+      left: Слева
+      right: Справа
   role:
     name:
       client_owner: Клиент. Администратор
