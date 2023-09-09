@@ -90,4 +90,28 @@ ActiveAdmin.register BuildingPart do
     flash[:error] = response.message
     render :new_update_routes
   end
+
+  action_item :new_print_labels, only: :show do
+    if can?(:new_print_labels, BuildingPart)
+      link_to I18n.t('my_active_admin.building_part.new_print_labels'),
+              new_print_labels_admin_building_part_path(id: resource.id), method: :get
+    end
+  end
+
+  member_action :new_print_labels, method: :get, title: I18n.t('my_active_admin.building_part.new_print_labels') do
+    @multiple_label_print_presenter = MultipleLabelPrintPresenter.new(resource.as_json)
+  end
+
+  member_action :print_labels, method: :post do
+    @multiple_label_print_presenter = MultipleLabelPrintPresenter.new(params.required(:multiple_label_print_presenter))
+    return render :new_print_labels unless @multiple_label_print_presenter.valid?
+
+
+    response = Client::Buildings::Services::PrintMultipleLabel.new(resource).call
+    return redirect_to admin_building_part_path(id: resource.id) if response.success?
+
+    flash[:error] = response.message
+    render :new_print_labels
+  end
+
 end

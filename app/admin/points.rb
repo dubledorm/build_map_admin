@@ -47,4 +47,27 @@ ActiveAdmin.register Point do
       external_svg(smart_map(resource.building_part, resource))
     end
   end
+
+  action_item :new_print_label, only: :show do
+    if can?(:new_print_label, Point)
+      link_to I18n.t('my_active_admin.building_part.points.new_print_label'),
+              new_print_label_admin_point_path(id: resource.id), method: :get
+    end
+  end
+
+  member_action :new_print_label, method: :get, title: I18n.t('my_active_admin.building_part.points.new_print_label') do
+    @single_label_print_presenter = SingleLabelPrintPresenter.new(resource.as_json)
+  end
+
+  member_action :print_label, method: :post do
+    @single_label_print_presenter = SingleLabelPrintPresenter.new(params.required(:single_label_print_presenter))
+    return render :new_print_label unless @single_label_print_presenter.valid?
+
+
+    response = Client::Buildings::Services::PrintSingleLabel.new(resource).call
+    return redirect_to admin_point_path(id: resource.id) if response.success?
+
+    flash[:error] = response.message
+    render :new_print_label
+  end
 end

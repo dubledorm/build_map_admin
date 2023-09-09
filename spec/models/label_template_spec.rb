@@ -12,4 +12,15 @@ RSpec.describe LabelTemplate, type: :model do
     # Validations
     it { should validate_presence_of(:name) }
   end
+
+  describe 'template_type' do
+    let!(:single_label_template) { FactoryBot.create :label_template, template_type: :single }
+    let!(:multiple_label_template) { FactoryBot.create :label_template, template_type: :multiple }
+
+    it { expect(described_class.single_templates.count).to eq(1) }
+    it { expect(described_class.single_templates.first).to eq(single_label_template) }
+
+    it { expect(described_class.multiple_templates.count).to eq(1) }
+    it { expect(described_class.multiple_templates.first).to eq(multiple_label_template) }
+  end
 end

@@ -103,9 +103,23 @@ ru:
               not_a_number: Значение масштаба карты должно быть целым положительным числом
               not_an_integer: Значение масштаба карты должно быть целым положительным числом
   activemodel:
+    attributes:
+      models:
+        single_label_print_presenter:
+          template_label_id: Шаблон для печати
+        multiple_label_print_presenter:
+          template_label_id: Шаблон для печати
     errors:
       models:
         load_map/target:
           attributes:
             point_type:
               inclusion: может содержать только значения crossroads или target
+        single_label_print_presenter:
+          attributes:
+            template_label_id:
+              blank: Поле 'Шаблон для печати' должно быть заполнено
+        multiple_label_print_presenter:
+          attributes:
+            template_label_id:
+              blank: Поле 'Шаблон для печати' должно быть заполнено

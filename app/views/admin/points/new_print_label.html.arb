@@ -1,0 +1,28 @@
+panel Point.model_name.human do
+  attributes_table_for resource do
+    row :building_part
+    row :organization
+    row :name
+    row :point_type
+    row :x_value
+    row :y_value
+    row :description
+    row :label_direction
+    row :created_at
+    row :updated_at
+  end
+end
+
+panel I18n.t('my_active_admin.building_part.points.new_print_label') do
+    columns do
+      column max_width: '400px' do
+        active_admin_form_for  single_label_print_presenter, url: print_label_admin_point_path(id: resource.id) do |f|
+          f.input :template_label_id, as: :select, collection: LabelTemplate.single_templates
+          actions
+        end
+      end
+      column do
+        text_node I18n.t('my_active_admin.new_print_label.instruction').html_safe
+      end
+    end
+end

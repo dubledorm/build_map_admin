@@ -7,4 +7,7 @@ class LabelTemplate < ApplicationRecord
 
   validates :name, :relation_name, presence: true
   validates :template_type, inclusion: { in: TEMPLATE_TYPE_VALUES }
+
+  scope :single_templates, -> { where(template_type: :single) }
+  scope :multiple_templates, -> { where(template_type: :multiple) }
 end
