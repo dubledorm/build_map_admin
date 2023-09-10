@@ -87,7 +87,7 @@ ActiveAdmin.register BuildingPart do
     return redirect_to admin_building_part_path(id: resource.id) if response.success?
 
     @building_part_update_routes = BuildingPartUpdateRoutes.new(resource.as_json)
-    flash[:error] = response.message
+    flash[:error] = response.message[0..250]
     render :new_update_routes
   end
 
@@ -106,11 +106,14 @@ ActiveAdmin.register BuildingPart do
     @multiple_label_print_presenter = MultipleLabelPrintPresenter.new(params.required(:multiple_label_print_presenter))
     return render :new_print_labels unless @multiple_label_print_presenter.valid?
 
+    template_name = LabelTemplate.find(@multiple_label_print_presenter.template_label_id).relation_name
+    response = Client::Buildings::Services::PrintMultipleLabel.new(Point.qr_code_label_by_building_part(resource.id),
+                                                                   template_name).call
+    if response.success?
+      return send_data response.result, filename: 'label.pdf', type: 'application/pdf', disposition: 'attachment'
+    end
 
-    response = Client::Buildings::Services::PrintMultipleLabel.new(resource).call
-    return redirect_to admin_building_part_path(id: resource.id) if response.success?
-
-    flash[:error] = response.message
+    flash[:error] = response.message[0..250]
     render :new_print_labels
   end
 

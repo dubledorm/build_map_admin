@@ -48,9 +48,17 @@ RSpec.describe Point, type: :model do
   end
 
   describe 'label_direction' do
-    let!(:point) { FactoryBot.create :point }
-    let!(:point_label) { FactoryBot.create :point, label_direction: :up }
+    let!(:building_part1) { FactoryBot.create :building_part }
+    let!(:building_part2) { FactoryBot.create :building_part }
+    let!(:point1) { FactoryBot.create :point, building_part: building_part1 }
+    let!(:point_label1) { FactoryBot.create :point, label_direction: :up, building_part: building_part1 }
+    let!(:point2) { FactoryBot.create :point, building_part: building_part2 }
+    let!(:point_label2) { FactoryBot.create :point, label_direction: :up, building_part: building_part2 }
 
-    it { expect(described_class.qr_code_labels.count).to eq(1) }
+    it { expect(described_class.qr_code_labels.count).to eq(2) }
+    it { expect(described_class.qr_code_label_by_building_part(building_part1.id).count).to eq(1) }
+    it { expect(described_class.qr_code_label_by_building_part(building_part2.id).count).to eq(1) }
+    it { expect(described_class.qr_code_label_by_building_part(building_part1.id).first).to eq(point_label1) }
+    it { expect(described_class.qr_code_label_by_building_part(building_part2.id).first).to eq(point_label2) }
   end
 end

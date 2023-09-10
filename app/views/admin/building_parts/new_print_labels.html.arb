@@ -9,6 +9,8 @@ panel Point.model_name.human do
     row :created_at
     row :updated_at
   end
+
+  h2 I18n.t('my_active_admin.new_print_labels.count_message', count: Point.qr_code_label_by_building_part(resource.id).count).html_safe
 end
 
 panel I18n.t('my_active_admin.building_part.new_print_labels') do

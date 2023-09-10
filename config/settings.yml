@@ -1,3 +1,5 @@
 svg_file:
   roads_layer_name: Roads # Название уровня с маршрутами в svg файле
   normalize_coordinate_limit: 3 # До скольки знаков обрезать дробную часть координат
+data_to_document:
+  base_url: http://localhost:3001

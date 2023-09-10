@@ -7,14 +7,13 @@ module Client
       class PrintMultipleLabel
         #   ROADS_LAYER_NAME = Settings.svg_file.roads_layer_name
 
-        def initialize(point)
-          @point = point
+        def initialize(points, template_name)
+          @points = points
+          @print_client = PrintClient::DataToDocument.new(template_name)
         end
 
         def call
-          # TODO Здесь вызов апи для печати этикетки
-
-          Client::Buildings::Dto::PrintMultipleLabelResponse.success('')
+          Client::Buildings::Dto::PrintMultipleLabelResponse.success(@print_client.multiple_print!(@points))
         rescue StandardError => e
           Client::Buildings::Dto::PrintMultipleLabelResponse.error(e.message)
         end

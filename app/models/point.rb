@@ -22,4 +22,5 @@ class Point < ApplicationRecord
   scope :by_group, ->(group_id) { joins(:groups).where(groups: { id: group_id }) }
   scope :targets, -> { where(point_type: :target) }
   scope :qr_code_labels, -> { where('points.label_direction <> ?', 'none') }
+  scope :qr_code_label_by_building_part, ->(building_part_id) { qr_code_labels.where(building_part_id:) }
 end

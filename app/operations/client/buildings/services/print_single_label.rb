@@ -7,20 +7,16 @@ module Client
       class PrintSingleLabel
         #   ROADS_LAYER_NAME = Settings.svg_file.roads_layer_name
 
-        def initialize(point)
+        def initialize(point, template_name)
           @point = point
+          @print_client = PrintClient::DataToDocument.new(template_name)
         end
 
         def call
-          # TODO Здесь вызов апи для печати этикетки
-
-          Client::Buildings::Dto::PrintSingleLabelResponse.success('')
+          Client::Buildings::Dto::PrintSingleLabelResponse.success(@print_client.single_print!(@point))
         rescue StandardError => e
           Client::Buildings::Dto::PrintSingleLabelResponse.error(e.message)
         end
-
-        private
-
       end
     end
   end

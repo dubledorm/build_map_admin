@@ -77,7 +77,7 @@ ActiveAdmin.register AdminUser do
                                                               current_admin_user)
       return super if validator.valid?
 
-      flash[:error] = validator.errors.map { |error| error[:messages].join(', ') }.join(', ')
+      flash[:error] = validator.errors.map { |error| error[:messages].join(', ') }.join(', ')[0..250]
       render :edit
     end
   end
