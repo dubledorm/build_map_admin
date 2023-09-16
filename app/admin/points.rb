@@ -64,7 +64,7 @@ ActiveAdmin.register Point do
     return render :new_print_label unless @single_label_print_presenter.valid?
 
     template_name = LabelTemplate.find(@single_label_print_presenter.template_label_id).relation_name
-    response = Client::Buildings::Services::PrintSingleLabel.new(resource, template_name).call
+    response = Client::Buildings::Services::PrintSingleLabel.new.call(resource, template_name)
     if response.success?
       return send_data response.result, filename: 'label.pdf', type: 'application/pdf', disposition: 'attachment'
     end

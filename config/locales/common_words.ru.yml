@@ -45,6 +45,11 @@ ru:
       dose_not_exists_end_of_tag: Не могу найти завершающего тега уровня - </g>
   operations:
     client:
+      buildings:
+        services:
+          print_single_label:
+            undefined_client: В настройках должен быть установлен клиент для доступа к сервису печати этикеток (Settings.print_client_class)
+            undefined_user_site_base_url: В настройках должен быть установлен базовый URL для пользовательского сайта (Settings.qr_code.user_site_base_url)
       users:
         services:
           registration:

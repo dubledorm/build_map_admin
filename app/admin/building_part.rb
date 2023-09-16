@@ -107,8 +107,8 @@ ActiveAdmin.register BuildingPart do
     return render :new_print_labels unless @multiple_label_print_presenter.valid?
 
     template_name = LabelTemplate.find(@multiple_label_print_presenter.template_label_id).relation_name
-    response = Client::Buildings::Services::PrintMultipleLabel.new(Point.qr_code_label_by_building_part(resource.id),
-                                                                   template_name).call
+    response = Client::Buildings::Services::PrintMultipleLabel.new.call(Point.qr_code_label_by_building_part(resource.id),
+                                                                        template_name)
     if response.success?
       return send_data response.result, filename: 'label.pdf', type: 'application/pdf', disposition: 'attachment'
     end

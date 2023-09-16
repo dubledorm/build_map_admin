@@ -11,7 +11,7 @@ module PrintClient
       def initialize(point)
         @building_name = point.building.name
         @target_name = point.name
-        @qr_code = '12345'
+        @qr_code = Client::Buildings::Services::BuildPointQrCode.call(point)
       end
 
       def attributes
