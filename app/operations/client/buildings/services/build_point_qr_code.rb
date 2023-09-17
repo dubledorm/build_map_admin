@@ -11,7 +11,7 @@ module Client
           end
 
           make_url(Settings.qr_code.user_site_base_url, "search?#{ { building_id: point.building.id,
-                                                                     target: point.id }.to_query }")
+                                                                     target_id: point.id }.to_query }")
         end
 
         def self.make_url(*args)
