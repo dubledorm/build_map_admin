@@ -40,5 +40,13 @@ class Ability
 
     can :read, AdminUser
     can :read, Role
+    can :read, Organization
+    can :read, Building
+    can :read, BuildingPart
+    can :read, BuildingPartDecorator
+    can :read, Point
+    can :read, PointDecorator
+    can :read, Road
+    can :read, Group
   end
 end

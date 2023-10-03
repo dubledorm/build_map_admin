@@ -114,12 +114,12 @@ module Core
 
         def validate_arguments!
           unless @building_id == @start_point.building.id
-            raise ArgumentError, "Точка с id = #{@start_point} не принадлежит зданию с id = #{@building_id}"
+            raise ArgumentError, "Точка с id = #{@start_point.id} не принадлежит зданию с id = #{@building_id}"
           end
 
           return if @building_id == @end_point.building.id
 
-          raise ArgumentError, "Точка с id = #{@end_point} не принадлежит зданию с id = #{@building_id}"
+          raise ArgumentError, "Точка с id = #{@end_point.id} не принадлежит зданию с id = #{@building_id}"
         end
 
         def select_point(current_point_id, route)
