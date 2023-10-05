@@ -62,4 +62,11 @@ ActiveAdmin.register Building do
       end
     end
   end
+
+  action_item :new_interfloor_road, only: :show do
+    if can?(:new_interfloor_road, Building)
+      link_to I18n.t('my_active_admin.building.new_interfloor_road'),
+              new_admin_building_road_path(building_id: resource.id), method: :get
+    end
+  end
 end

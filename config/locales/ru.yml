@@ -56,6 +56,7 @@ ru:
         state: Состояние
         original_map: Карта
         map_scale: Масштаб карты (точек/метр)
+        level: Уровень
         <<: *default
       group:
         name: Название
@@ -67,12 +68,18 @@ ru:
         description: Описание
         point_type: Тип
         building_part: Этаж/Часть локации
+        building: Здание
         label_direction: Qr код (направление, существование)
         <<: *default
       road:
         point1: Точка1
         point2: Точка2
+        point1_id: Id Точка1
+        point2_id: Id Точка2
         weight: Вес дуги
+        road_type: Тип
+        building_part: Этаж/Часть локации
+        building: Здание
         <<: *default
       role:
         name: Роль

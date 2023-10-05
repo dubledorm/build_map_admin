@@ -95,8 +95,8 @@ module Core
         end
 
         def find_road_ids
-          building_part = @start_point.building_part
-          path_finder = PathFinder.new(RoadsAdapter::RoadsAdapter.new(building_part.roads, ActiveRecordEntityBuilder))
+          building = @start_point.building
+          path_finder = PathFinder.new(RoadsAdapter::RoadsAdapter.new(building.roads, ActiveRecordEntityBuilder))
           path_finder.find(@start_point.id, @end_point.id)
         end
 

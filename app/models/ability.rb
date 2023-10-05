@@ -26,6 +26,7 @@ class Ability
       can :manage, Point, organization_id: user.organization_id
       can :manage, PointDecorator, organization_id: user.organization_id
       can :manage, Road, organization_id: user.organization_id
+      can :manage, RoadDecorator, organization_id: user.organization_id
       can :read, Group, organization_id: user.organization_id
     end
 
@@ -47,6 +48,7 @@ class Ability
     can :read, Point
     can :read, PointDecorator
     can :read, Road
+    can :read, RoadDecorator
     can :read, Group
   end
 end

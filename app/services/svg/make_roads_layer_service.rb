@@ -7,6 +7,7 @@ module Svg
     POINT_TYPE_TO_CLASS = { crossroads: 'point_crossroads',
                             target: 'point_target',
                             current: 'point_current',
+                            staircase: 'point_staircase',
                             undefined: 'point_undefined' }.freeze
 
     def initialize(points, roads, current_point = nil)
@@ -14,6 +15,9 @@ module Svg
       @roads = roads
       @current_point = current_point
       @points_hash = {}
+      @staircase_point_ids = []
+      building = points.first&.building
+      @staircase_point_ids = building.roads.staircase_only.pluck(:point1_id, :point2_id).flatten.uniq if building
     end
 
     def make
@@ -32,7 +36,7 @@ module Svg
     end
 
     def roads
-      @roads.inject('') do |result, road|
+      @roads.includes(:point1, :point2).road_only.inject('') do |result, road|
         result + "<line class=\"road_svg\"
  x1=\"#{@points_hash.dig(road.point1.id, :x)}\"
  x2=\"#{@points_hash.dig(road.point2.id, :x)}\"
@@ -42,9 +46,12 @@ module Svg
     end
 
     def point_class(point)
-      return POINT_TYPE_TO_CLASS[:current] if @current_point && point.id == @current_point.id
+      result = []
+      result << POINT_TYPE_TO_CLASS[:current] if @current_point && point.id == @current_point.id
 
-      POINT_TYPE_TO_CLASS[point.point_type.to_sym] || POINT_TYPE_TO_CLASS[:undefined]
+      result << POINT_TYPE_TO_CLASS[point.point_type.to_sym] || POINT_TYPE_TO_CLASS[:undefined]
+      result << POINT_TYPE_TO_CLASS[:staircase] if @staircase_point_ids.include?(point.id)
+      result.join(' ')
     end
   end
 end

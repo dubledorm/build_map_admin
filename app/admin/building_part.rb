@@ -1,10 +1,12 @@
 ActiveAdmin.register BuildingPart do
-  permit_params :building_id, :name, :description, :state, :original_map, :map_scale, :building_part_update_routes
+  permit_params :building_id, :name, :description, :state, :original_map, :map_scale, :building_part_update_routes,
+                :level
   actions :index, :show, :edit, :update, :destroy
   filter :building
   filter :name
   filter :state, as: :check_boxes,
                  collection: proc { BuildingPartDecorator.states }
+  filter :level
   filter :created_at
   filter :updated_at
 
@@ -17,6 +19,7 @@ ActiveAdmin.register BuildingPart do
     column :name
     column :state
     column :description
+    column :level
     column :created_at
     column :updated_at
     actions
@@ -28,6 +31,7 @@ ActiveAdmin.register BuildingPart do
       f.input :name
       f.input :description, as: :text
       f.input :state, as: :select, collection: BuildingPartDecorator.states
+      f.input :level
       panel I18n.t('my_active_admin.building_part.original_map') do
         f.file_field :original_map
       end
@@ -44,6 +48,7 @@ ActiveAdmin.register BuildingPart do
         row :organization
         row :name
         row :state
+        row :level
         row :description
         row :map_scale
         row :created_at

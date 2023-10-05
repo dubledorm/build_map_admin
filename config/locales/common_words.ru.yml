@@ -4,6 +4,7 @@ ru:
       building_manage: Управление локациями
     building:
       show: Открыть
+      new_interfloor_road: Новый межэтажный переход
     building_part:
       original_map: Оригинальная карта
       map: Карта
@@ -14,6 +15,8 @@ ru:
       points:
         show: Открыть
         new_print_label: Печать этикетки
+      roads:
+        show: Открыть
     update_routes:
       confirm: Внимание, при выполнении этой операции, стираются уже существующие точки и дуги и создаются новые, на основании карты и xls файла с доп. информацией, который будет присоединён на следующем шаге
     new_print_labels:

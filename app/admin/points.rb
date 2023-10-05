@@ -2,6 +2,7 @@ ActiveAdmin.register Point do
   permit_params :name, :description, :point_type, :x_value, :y_value, :label_direction,
                 group_ids: []
   decorate_with PointDecorator
+  includes :organization, :building, :building_part
 
   form title: Point.model_name.human do |f|
     f.semantic_errors *f.object.errors
@@ -21,8 +22,9 @@ ActiveAdmin.register Point do
   show do
     panel Point.model_name.human do
       attributes_table_for point do
-        row :building_part
         row :organization
+        row :building
+        row :building_part
         row :name
         row :point_type
         row :x_value

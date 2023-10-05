@@ -34,6 +34,12 @@
   stroke: #dd1616;
 }
 
+.point_staircase {
+  stroke-width: 4;
+  stroke-dasharray: 5,2;
+  stroke: #7ddd16;
+}
+
 .point_undefined {
   stroke-width: 1;
   fill: gray;

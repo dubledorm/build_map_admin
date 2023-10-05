@@ -19,6 +19,11 @@ ru:
       down: Вниз
       left: Слева
       right: Справа
+  road:
+    road_type:
+      staircase: лестница
+      road: дорога
+      undefined: ''
   role:
     name:
       client_owner: Клиент. Администратор
