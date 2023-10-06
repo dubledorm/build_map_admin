@@ -1,13 +1,16 @@
 ActiveAdmin.register AdminUser do
   menu parent: 'additional'
   permit_params :email, :password, :password_confirmation, roles_attributes: %i[id name _destroy]
+  includes :organization, :roles
 
   index do
     selectable_column
     id_column
     column :email
     column :organization
-    column :roles
+    column AdminUser.human_attribute_name(:roles) do |admin_user|
+      admin_user.roles.map(&:decorate)
+    end
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -15,9 +18,11 @@ ActiveAdmin.register AdminUser do
   end
 
   filter :email
+  filter :organization, collection: proc { Organization.accessible_by(current_ability) }
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
+
 
   form do |f|
     f.semantic_errors *f.object.errors

@@ -3,7 +3,7 @@ ActiveAdmin.register BuildingPart do
   permit_params :building_id, :name, :description, :state, :original_map, :map_scale, :building_part_update_routes,
                 :level
   actions :index, :show, :edit, :update, :destroy
-  filter :building
+  filter :building, collection: proc { Building.accessible_by(current_ability) }
   filter :name
   filter :state, as: :check_boxes,
                  collection: proc { BuildingPartDecorator.states }
@@ -14,7 +14,6 @@ ActiveAdmin.register BuildingPart do
   decorate_with BuildingPartDecorator
 
   index do
-    selectable_column
     id_column
     column :building
     column :name

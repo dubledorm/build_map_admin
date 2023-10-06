@@ -4,6 +4,18 @@ ActiveAdmin.register Building do
                 building_parts_attributes: %i[id building_id name description state _destroy],
                 groups_attributes: %i[id name description _destroy]
   filter :name
+  filter :organization, collection: proc { Organization.accessible_by(current_ability) }
+
+  index do
+    id_column
+    column :organization
+    column :name
+    column :description
+    column :created_at
+    column :updated_at
+    actions
+  end
+
 
   form title: Building.model_name.human do |f|
     f.semantic_errors *f.object.errors
