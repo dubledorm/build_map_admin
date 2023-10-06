@@ -1,5 +1,5 @@
 ActiveAdmin.register Building do
-  menu parent: :manage_building
+  menu parent: 'building'
   permit_params :name, :description,
                 building_parts_attributes: %i[id building_id name description state _destroy],
                 groups_attributes: %i[id name description _destroy]

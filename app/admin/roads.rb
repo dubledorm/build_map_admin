@@ -3,6 +3,7 @@ ActiveAdmin.register Road do
   decorate_with RoadDecorator
   belongs_to :building
   includes :organization, :building, :building_part
+  menu false
 
   form title: Road.model_name.human do |f|
     f.semantic_errors *f.object.errors

@@ -76,6 +76,7 @@ group :development do
 end
 
 gem 'activeadmin'
+gem 'activeadmin_blaze_theme'
 gem 'awesome_print'
 gem 'cancancan'
 gem 'config'

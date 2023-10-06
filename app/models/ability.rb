@@ -4,8 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the user here. For example:
-    can :read, (ActiveAdmin.register_page 'Dashboard')
+    can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
 
     return unless user.present?
 

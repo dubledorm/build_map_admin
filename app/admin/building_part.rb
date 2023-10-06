@@ -1,4 +1,5 @@
 ActiveAdmin.register BuildingPart do
+  menu parent: 'building'
   permit_params :building_id, :name, :description, :state, :original_map, :map_scale, :building_part_update_routes,
                 :level
   actions :index, :show, :edit, :update, :destroy

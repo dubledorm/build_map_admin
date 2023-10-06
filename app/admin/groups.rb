@@ -2,4 +2,5 @@
 
 ActiveAdmin.register Group do
   actions :index
+  menu false
 end

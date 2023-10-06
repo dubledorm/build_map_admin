@@ -1,4 +1,5 @@
 ActiveAdmin.register AdminUser do
+  menu parent: 'additional'
   permit_params :email, :password, :password_confirmation, roles_attributes: %i[id name _destroy]
 
   index do

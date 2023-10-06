@@ -3,6 +3,7 @@ ActiveAdmin.register Point do
                 group_ids: []
   decorate_with PointDecorator
   includes :organization, :building, :building_part
+  menu false
 
   form title: Point.model_name.human do |f|
     f.semantic_errors *f.object.errors

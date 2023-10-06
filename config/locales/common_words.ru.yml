@@ -1,7 +1,13 @@
 ru:
   my_active_admin:
+    header:
+      title: Админка
+    footer:
+      name: Система управления indoor навигации
     menu:
       building_manage: Управление локациями
+      building: Здание
+      additional: Дополнительно
     building:
       show: Открыть
       new_interfloor_road: Новый межэтажный переход

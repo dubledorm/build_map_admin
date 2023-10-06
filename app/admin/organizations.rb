@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Organization do
-
+  menu parent: 'additional'
   permit_params :name
   #
   # or
