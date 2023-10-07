@@ -84,6 +84,10 @@ module Core
         # Вернуть в правильном порядке дуги
         def build_roads_fiber
           roads_ids = find_road_ids
+          if roads_ids.empty?
+            raise StandardError, "Не могу найти маршрут от точки #{@start_point_id} до точки #{@end_point_id}"
+          end
+
           Fiber.new do
             roads = Road.where(id: roads_ids).map { |road| road.as_json(except: EXCEPT_FIELDS).symbolize_keys }
             index = 0

@@ -133,4 +133,36 @@ RSpec.describe Core::Routes::Services::FindPath do
     it { expect(subject.find.path[0][:point][:x_value]).to eq(result[0][:point][:x_value]) }
     it { expect(subject.find.path[1][:point][:x_value]).to eq(result[1][:point][:x_value]) }
   end
+
+  describe 'wrong cases' do
+    context 'when roads dose not exists' do
+      let!(:building) { FactoryBot.create :building }
+      let!(:floor1) { FactoryBot.create :building_part, building: }
+      let!(:floor2) { FactoryBot.create :building_part, building: }
+      let!(:point1) { FactoryBot.create :point, building_part: floor1 }
+      let!(:point2) { FactoryBot.create :point, building_part: floor2 }
+      let(:subject) { described_class.new(building.id, point1.id, point2.id) }
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_falsey }
+      it { expect(subject.find.message).to eq("Точка с id - #{point1.id} не принадлежит ни одной дуге") }
+    end
+
+    context 'when path dose not exists' do
+      let!(:building) { FactoryBot.create :building }
+      let!(:floor1) { FactoryBot.create :building_part, building: }
+      let!(:floor2) { FactoryBot.create :building_part, building: }
+      let!(:point1) { FactoryBot.create :point, building_part: floor1 }
+      let!(:point2) { FactoryBot.create :point, building_part: floor1 }
+      let!(:point3) { FactoryBot.create :point, building_part: floor2 }
+      let!(:point4) { FactoryBot.create :point, building_part: floor2 }
+      let!(:road1) { FactoryBot.create :road, point1:, point2:, building_part: floor1 }
+      let!(:road2) { FactoryBot.create :road, point1: point3, point2: point4, building_part: floor2 }
+      let(:subject) { described_class.new(building.id, point1.id, point3.id) }
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_falsey }
+      it { expect(subject.find.message).to eq("Не могу найти маршрут от точки #{point1.id} до точки #{point3.id}") }
+    end
+  end
 end

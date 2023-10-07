@@ -24,7 +24,7 @@ module RoadsAdapter
         return index if point_entity.id == point_id
       end
 
-      throw StandardError, "Не могу найти точку с id - #{point_id}"
+      raise StandardError, "Точка с id - #{point_id} не принадлежит ни одной дуге"
     end
 
     # Найти дугу по индексу двух точек и весу. Вернуть её индекс
@@ -37,7 +37,7 @@ module RoadsAdapter
         end
       end
 
-      throw StandardError,
+      raise StandardError,
             "Не могу найти дугу с параметрами start_index - #{start_index}, end_index #{end_index}, weight #{weight}"
     end
 
