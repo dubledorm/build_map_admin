@@ -33,12 +33,16 @@ module Core
 
         def init
           @start_point = Point.find(@start_point_id)
+          if @start_point.label_direction == 'none'
+            raise StandardError, "Для точки #{@start_point.id} не указано направление этикетки QR кода. Не могу построить описание маршрута"
+          end
+
           @end_point = Point.find(@end_point_id)
           validate_arguments!
         end
 
         def add_legend(point_and_weight_array)
-          current_direction = :up
+          current_direction = @start_point.label_direction.to_sym
 
           point_and_weight_array.each_with_object([]) do |point_end_weight, queue|
             queue << point_end_weight

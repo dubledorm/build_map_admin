@@ -13,6 +13,7 @@ RSpec.describe Core::Routes::Services::FindPath do
     before :each do
       allow(Point).to receive(:find).and_return(Point.new(building_part:))
       allow_any_instance_of(Point).to receive(:building).and_return(building_part.building)
+      allow_any_instance_of(Point).to receive(:label_direction).and_return('up')
       allow_any_instance_of(described_class).to receive(:find_road_ids).and_return(road_ids)
       subject.send(:init)
     end
@@ -44,6 +45,7 @@ RSpec.describe Core::Routes::Services::FindPath do
     before :each do
       allow(Point).to receive(:find).and_return(Point.new(building_part:))
       allow_any_instance_of(Point).to receive(:building).and_return(building_part.building)
+      allow_any_instance_of(Point).to receive(:label_direction).and_return('up')
       subject.send(:init)
     end
 
@@ -87,7 +89,7 @@ RSpec.describe Core::Routes::Services::FindPath do
   end
 
   describe 'find' do
-    let!(:points) { FactoryBot.create_list :point, 10, building_part: }
+    let!(:points) { FactoryBot.create_list :point, 10, building_part:, label_direction: 'up'}
     let!(:road1) { FactoryBot.create :road, building_part:, point1_id: points[0].id, point2_id: points[1].id, weight: 10_000 }
     let!(:road2) { FactoryBot.create :road, building_part:, point1_id: points[1].id, point2_id: points[2].id, weight: 20_000 }
     let!(:road3) { FactoryBot.create :road, building_part:, point1_id: points[2].id, point2_id: points[3].id, weight: 30_000 }
@@ -139,7 +141,7 @@ RSpec.describe Core::Routes::Services::FindPath do
       let!(:building) { FactoryBot.create :building }
       let!(:floor1) { FactoryBot.create :building_part, building: }
       let!(:floor2) { FactoryBot.create :building_part, building: }
-      let!(:point1) { FactoryBot.create :point, building_part: floor1 }
+      let!(:point1) { FactoryBot.create :point, building_part: floor1, label_direction: 'up' }
       let!(:point2) { FactoryBot.create :point, building_part: floor2 }
       let(:subject) { described_class.new(building.id, point1.id, point2.id) }
 
@@ -152,7 +154,7 @@ RSpec.describe Core::Routes::Services::FindPath do
       let!(:building) { FactoryBot.create :building }
       let!(:floor1) { FactoryBot.create :building_part, building: }
       let!(:floor2) { FactoryBot.create :building_part, building: }
-      let!(:point1) { FactoryBot.create :point, building_part: floor1 }
+      let!(:point1) { FactoryBot.create :point, building_part: floor1, label_direction: 'up' }
       let!(:point2) { FactoryBot.create :point, building_part: floor1 }
       let!(:point3) { FactoryBot.create :point, building_part: floor2 }
       let!(:point4) { FactoryBot.create :point, building_part: floor2 }
@@ -163,6 +165,51 @@ RSpec.describe Core::Routes::Services::FindPath do
       it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
       it { expect(subject.find.success?).to be_falsey }
       it { expect(subject.find.message).to eq("Не могу найти маршрут от точки #{point1.id} до точки #{point3.id}") }
+    end
+  end
+
+  describe 'label_direction' do
+    let!(:building) { FactoryBot.create :building }
+    let!(:floor1) { FactoryBot.create :building_part, building:, map_scale: 10 }
+    let!(:point1) { FactoryBot.create :point, building_part: floor1, x_value: 1000, y_value: 1000 }
+    let!(:point2) { FactoryBot.create :point, building_part: floor1, x_value: 2000, y_value: 1000 }
+    let!(:point3) { FactoryBot.create :point, building_part: floor1, x_value: 2000, y_value: 3000 }
+    let!(:road1) { FactoryBot.create :road, point1:, point2:, building_part: floor1, weight: 1000 }
+    let!(:road2) { FactoryBot.create :road, point1: point2, point2: point3, building_part: floor1, weight: 1000 }
+
+    let(:subject) { described_class.new(building.id, point1.id, point3.id) }
+
+    context 'when start point label direction is up' do
+      before :each do
+        point1.update(label_direction: 'up')
+      end
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[right right finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right down finish]) }
+    end
+
+    context 'when start point label direction is down' do
+      before :each do
+        point1.update(label_direction: 'down')
+      end
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[left right finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right down finish]) }
+    end
+
+    context 'when start point label direction is left' do
+      before :each do
+        point1.update(label_direction: 'left')
+      end
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[backward right finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right down finish]) }
     end
   end
 end
