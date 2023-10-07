@@ -20,6 +20,7 @@ RSpec.describe LoadMap::Factories::PointFromTarget do
                                                           'organization_id' => nil,
                                                           'point_type' => 'crossroads',
                                                           'updated_at' => nil,
+                                                          'label_direction' => 'none',
                                                           'x_value' => 33_003,
                                                           'y_value' => 271_761 })
   }

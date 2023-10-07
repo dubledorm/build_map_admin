@@ -60,7 +60,7 @@ ActiveAdmin.register BuildingPart do
       tab I18n.t('my_active_admin.building_part.map') do
         render 'original_map'
       end
-      tab 'immutable_map' do
+      tab I18n.t('my_active_admin.building_part.immutable_map') do
         render 'immutable_map'
       end
       tab Point.model_name.human(count: 2) do
