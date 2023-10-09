@@ -24,6 +24,12 @@ ru:
       staircase: лестница
       road: дорога
       undefined: ''
+    exit_map_direction:
+      up: Вверх
+      down: Вниз
+      left: Слева
+      right: Справа
+      undefined: Неопределено
   role:
     name:
       client_owner: Клиент. Администратор

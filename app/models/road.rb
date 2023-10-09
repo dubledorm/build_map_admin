@@ -3,9 +3,12 @@
 # Запись о дуге между точками
 class Road < ApplicationRecord
   ROAD_TYPE_VALUES = %w[staircase road].freeze
+  EXIT_MAP_DIRECTION_VALUES = %w[up down left right].freeze
 
   validates :weight, presence: true
   validates :road_type, inclusion: { in: ROAD_TYPE_VALUES }, allow_nil: true
+  validates :exit_map_direction1, inclusion: { in: EXIT_MAP_DIRECTION_VALUES }, allow_nil: true
+  validates :exit_map_direction2, inclusion: { in: EXIT_MAP_DIRECTION_VALUES }, allow_nil: true
 
   belongs_to :organization
   belongs_to :building_part

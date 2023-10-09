@@ -1,5 +1,6 @@
 ActiveAdmin.register Road do
-  permit_params :point1_id, :point2_id, :weight, :organization_id, :building_part_id, :road_type
+  permit_params :point1_id, :point2_id, :weight, :organization_id, :building_part_id, :road_type,
+                :exit_map_direction1, :exit_map_direction2
   decorate_with RoadDecorator
   belongs_to :building
   includes :organization, :building, :building_part
@@ -11,6 +12,8 @@ ActiveAdmin.register Road do
       f.input :road_type, as: :select, collection: RoadDecorator.road_types
       f.input :point1, as: :select, collection: RoadDecorator.points(building)
       f.input :point2, as: :select, collection: RoadDecorator.points(building)
+      f.input :exit_map_direction1, as: :select, collection: RoadDecorator.exit_map_directions
+      f.input :exit_map_direction2, as: :select, collection: RoadDecorator.exit_map_directions
       f.input :weight
     end
 
@@ -25,6 +28,8 @@ ActiveAdmin.register Road do
         row :building_part
         row :point1
         row :point2
+        row :exit_map_direction1
+        row :exit_map_direction2
         row :road_type
         row :weight
         row :created_at

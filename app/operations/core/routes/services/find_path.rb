@@ -114,10 +114,11 @@ module Core
           point_and_weight_array = []
           until (road_hash = roads_fiber.resume).nil?
             first_point_id, next_point_id = select_point(current_point_id, road_hash)
-            point_and_weight_array << { point_id: first_point_id, weight: road_hash[:weight] }
+            point_and_weight_array << { point_id: first_point_id, weight: road_hash[:weight],
+                                        road_type: road_hash[:road_type] }
             current_point_id = next_point_id
           end
-          point_and_weight_array << { point_id: current_point_id, weight: 0 }
+          point_and_weight_array << { point_id: current_point_id, weight: 0, road_type: nil }
         end
 
         def validate_arguments!

@@ -60,11 +60,11 @@ RSpec.describe Core::Routes::Services::FindPath do
 
       it do
         point_and_weight_array = subject.send(:build_point_and_weight_array, roads_fiber)
-        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1 },
-                                              { point_id: 2, weight: 2 },
-                                              { point_id: 3, weight: 3 },
-                                              { point_id: 4, weight: 4 },
-                                              { point_id: 5, weight: 0 }])
+        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road_type: nil },
+                                              { point_id: 2, weight: 2, road_type: nil },
+                                              { point_id: 3, weight: 3, road_type: nil },
+                                              { point_id: 4, weight: 4, road_type: nil },
+                                              { point_id: 5, weight: 0, road_type: nil }])
       end
     end
 
@@ -79,11 +79,11 @@ RSpec.describe Core::Routes::Services::FindPath do
 
       it do
         point_and_weight_array = subject.send(:build_point_and_weight_array, roads_fiber)
-        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1 },
-                                              { point_id: 2, weight: 2 },
-                                              { point_id: 3, weight: 3 },
-                                              { point_id: 4, weight: 4 },
-                                              { point_id: 5, weight: 0 }])
+        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road_type: nil },
+                                              { point_id: 2, weight: 2, road_type: nil },
+                                              { point_id: 3, weight: 3, road_type: nil },
+                                              { point_id: 4, weight: 4, road_type: nil },
+                                              { point_id: 5, weight: 0, road_type: nil }])
       end
     end
   end

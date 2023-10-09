@@ -76,6 +76,8 @@ ru:
         point2: Точка2
         point1_id: Id Точка1
         point2_id: Id Точка2
+        exit_map_direction1: Направление выхода 1
+        exit_map_direction2: Направление выхода 2
         weight: Вес дуги
         road_type: Тип
         building_part: Этаж/Часть локации

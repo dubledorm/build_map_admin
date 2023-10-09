@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_170318) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_09_185539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -153,6 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_170318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "road_type"
+    t.string "exit_map_direction1"
+    t.string "exit_map_direction2"
     t.index ["building_part_id"], name: "index_roads_on_building_part_id"
     t.index ["organization_id"], name: "index_roads_on_organization_id"
     t.index ["point1_id"], name: "index_roads_on_point1_id"
