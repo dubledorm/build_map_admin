@@ -5,14 +5,10 @@ module Core
     module Services
       # Вернуть словесное описание маршрута между двумя точками, а также направление
       # Расчёты ведутся от положения начала координат в левом верхнем углу карты
-      class PathSpeaker
-        attr_reader :legend, :user_direction, :map_direction, :length_m
+      class PathSpeaker < BaseSpeaker
 
-        NORMALIZE_RANGE = Settings.svg_file.normalize_coordinate_limit # До скольки знаков обрезать дробную часть координат
         DIRECTION_VALUES = %i[left right up down finish].freeze
         UP_CORNER_TN = 1 # Тангенс угла от оси Х до линии, отделяющей верхний сектор
-        # Делитель для перевода веса дуги в длину в метрах
-        DIVIDER_M =  Array.new(NORMALIZE_RANGE) { 10 }.inject(1) { |result, item| result * item }
 
         # Массив для применения поправки на текущее направление
         CURRENT_DIRECTION_MAP = [{ current_direction: :up, direction: :up, result: :forward },
@@ -33,16 +29,10 @@ module Core
                                  { current_direction: :down, direction: :down, result: :forward }].freeze
 
         LEGEND_MAP = { forward: ->(length) { "Двигайтесь прямо #{length} метров" },
-                       right: ->(length) { "Поверните на право и пройдите #{length} метров" },
-                       left: ->(length) { "Поверните на лево и пройдите #{length} метров" },
+                       right: ->(length) { "Поверните направо и пройдите #{length} метров" },
+                       left: ->(length) { "Поверните налево и пройдите #{length} метров" },
                        backward: ->(length) { "Поверните назад и пройдите #{length} метров" },
                        finish: ->(_) { 'Вы пришли' } }.freeze
-        def initialize(point1_hash, point2_hash, weight, current_direction, map_scale)
-          @point1_hash = point1_hash
-          @point2_hash = point2_hash
-          @current_direction = current_direction
-          @length_m = weight / (DIVIDER_M * map_scale)
-        end
 
         def self.build_without_map_scale(point1_hash, point2_hash, weight, current_direction)
           result = PathSpeaker.new(point1_hash, point2_hash, weight, current_direction, 1)

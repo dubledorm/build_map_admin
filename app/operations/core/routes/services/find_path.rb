@@ -9,6 +9,9 @@ module Core
       # Найти маршрут между двумя точками
       class FindPath
         EXCEPT_FIELDS = %i[created_at updated_at organization_id].freeze
+        ROAD_TYPE_TO_SPEAKER = { 'road' => Core::Routes::Services::PathSpeaker,
+                                 nil => Core::Routes::Services::PathSpeaker,
+                                 'staircase' => Core::Routes::Services::VerticalPathSpeaker}.freeze
 
         def initialize(building_id, start_point_id, end_point_id)
           @building_id = building_id
@@ -56,9 +59,11 @@ module Core
         end
 
         def fill_legend(point_and_weight1, point_and_weight2, current_direction)
-          path_speaker = PathSpeaker.new(point_and_weight1[:point], point_and_weight2&.dig(:point),
-                                         point_and_weight1[:weight], current_direction,
-                                         BuildingPart.find(point_and_weight1[:point][:building_part_id]).map_scale)
+          path_speaker = ROAD_TYPE_TO_SPEAKER[point_and_weight1.dig(:road, :road_type)]
+                         .new(point_and_weight1[:point], point_and_weight2&.dig(:point), point_and_weight1[:road],
+                              current_direction, BuildingPart.find(point_and_weight1[:point][:building_part_id])
+                                                               .map_scale)
+
           point_and_weight1[:legend] = path_speaker.legend
           point_and_weight1[:direction] = path_speaker.user_direction
           point_and_weight1[:weight] = path_speaker.length_m
@@ -115,10 +120,10 @@ module Core
           until (road_hash = roads_fiber.resume).nil?
             first_point_id, next_point_id = select_point(current_point_id, road_hash)
             point_and_weight_array << { point_id: first_point_id, weight: road_hash[:weight],
-                                        road_type: road_hash[:road_type] }
+                                        road: road_hash }
             current_point_id = next_point_id
           end
-          point_and_weight_array << { point_id: current_point_id, weight: 0, road_type: nil }
+          point_and_weight_array << { point_id: current_point_id, weight: 0, road: nil }
         end
 
         def validate_arguments!

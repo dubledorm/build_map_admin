@@ -51,39 +51,39 @@ RSpec.describe Core::Routes::Services::FindPath do
 
     context 'when first element order is true' do
       let!(:roads_fiber_result) do
-        [{ id: 1, point1_id: 1, point2_id: 2, weight: 1 },
-         { id: 2, point1_id: 3, point2_id: 2, weight: 2 },
-         { id: 3, point1_id: 3, point2_id: 4, weight: 3 },
-         { id: 4, point1_id: 5, point2_id: 4, weight: 4 },
+        [{ id: 1, point1_id: 1, point2_id: 2, weight: 1, road_type: 'road' },
+         { id: 2, point1_id: 3, point2_id: 2, weight: 2, road_type: 'road' },
+         { id: 3, point1_id: 3, point2_id: 4, weight: 3, road_type: 'road' },
+         { id: 4, point1_id: 5, point2_id: 4, weight: 4, road_type: 'road' },
          nil]
       end
 
       it do
         point_and_weight_array = subject.send(:build_point_and_weight_array, roads_fiber)
-        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road_type: nil },
-                                              { point_id: 2, weight: 2, road_type: nil },
-                                              { point_id: 3, weight: 3, road_type: nil },
-                                              { point_id: 4, weight: 4, road_type: nil },
-                                              { point_id: 5, weight: 0, road_type: nil }])
+        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road: { id: 1, point1_id: 1, point2_id: 2, weight: 1, road_type: 'road' } },
+                                              { point_id: 2, weight: 2, road: { id: 2, point1_id: 3, point2_id: 2, weight: 2, road_type: 'road' } },
+                                              { point_id: 3, weight: 3, road: { id: 3, point1_id: 3, point2_id: 4, weight: 3, road_type: 'road' } },
+                                              { point_id: 4, weight: 4, road: { id: 4, point1_id: 5, point2_id: 4, weight: 4, road_type: 'road' } },
+                                              { point_id: 5, weight: 0, road: nil }])
       end
     end
 
     context 'when first element order is false' do
       let!(:roads_fiber_result) do
-        [{ id: 1, point1_id: 2, point2_id: 1, weight: 1 },
-         { id: 2, point1_id: 3, point2_id: 2, weight: 2 },
-         { id: 3, point1_id: 3, point2_id: 4, weight: 3 },
-         { id: 4, point1_id: 5, point2_id: 4, weight: 4 },
+        [{ id: 1, point1_id: 2, point2_id: 1, weight: 1, road_type: 'road' },
+         { id: 2, point1_id: 3, point2_id: 2, weight: 2, road_type: 'road' },
+         { id: 3, point1_id: 3, point2_id: 4, weight: 3, road_type: 'road'},
+         { id: 4, point1_id: 5, point2_id: 4, weight: 4, road_type: 'road' },
          nil]
       end
 
       it do
         point_and_weight_array = subject.send(:build_point_and_weight_array, roads_fiber)
-        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road_type: nil },
-                                              { point_id: 2, weight: 2, road_type: nil },
-                                              { point_id: 3, weight: 3, road_type: nil },
-                                              { point_id: 4, weight: 4, road_type: nil },
-                                              { point_id: 5, weight: 0, road_type: nil }])
+        expect(point_and_weight_array).to eq([{ point_id: 1, weight: 1, road: { id: 1, point1_id: 2, point2_id: 1, weight: 1, road_type: 'road' } },
+                                              { point_id: 2, weight: 2, road: { id: 2, point1_id: 3, point2_id: 2, weight: 2, road_type: 'road' } },
+                                              { point_id: 3, weight: 3, road: { id: 3, point1_id: 3, point2_id: 4, weight: 3, road_type: 'road' } },
+                                              { point_id: 4, weight: 4, road: { id: 4, point1_id: 5, point2_id: 4, weight: 4, road_type: 'road' } },
+                                              { point_id: 5, weight: 0, road: nil }])
       end
     end
   end
@@ -117,7 +117,7 @@ RSpec.describe Core::Routes::Services::FindPath do
                                                      name: points[3].name,
                                                      point_type: 'crossroads',
                                                      x_value: points[3].x_value, y_value: points[3].y_value } },
-       { point_id: points[4].id, weight: 0, point: { building_part_id: building_part.id,
+       { point_id: points[4].id, weight: nil, point: { building_part_id: building_part.id,
                                                      id: points[4].id, description: nil,
                                                      name: points[4].name,
                                                      point_type: 'crossroads',
@@ -210,6 +210,76 @@ RSpec.describe Core::Routes::Services::FindPath do
       it { expect(subject.find.success?).to be_truthy }
       it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[backward right finish]) }
       it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right down finish]) }
+    end
+  end
+
+  describe 'road staircase' do
+    let!(:building) { FactoryBot.create :building }
+    let!(:floor1) { FactoryBot.create :building_part, building:, map_scale: 10, level: 1 }
+    let!(:floor2) { FactoryBot.create :building_part, building:, map_scale: 10, level: 2 }
+    let!(:point1) { FactoryBot.create :point, building_part: floor1, x_value: 1000, y_value: 3000, label_direction: 'up' }
+    let!(:point2) { FactoryBot.create :point, building_part: floor1, x_value: 2000, y_value: 3000 }
+    let!(:point3) { FactoryBot.create :point, building_part: floor1, x_value: 2000, y_value: 2900 }
+    let!(:point4) { FactoryBot.create :point, building_part: floor2, x_value: 2000, y_value: 2000 }
+    let!(:point5) { FactoryBot.create :point, building_part: floor2, x_value: 2000, y_value: 1000, label_direction: 'down' }
+    let!(:road1) { FactoryBot.create :road, point1:, point2:, building_part: floor1, weight: 1000 }
+    let!(:road2) { FactoryBot.create :road, point1: point2, point2: point3, building_part: floor1, weight: 1000 }
+    let!(:road3) do
+      FactoryBot.create :road, point1: point3, point2: point4, building_part: floor1, weight: 1000,
+                               road_type: 'staircase', exit_map_direction1: :up, exit_map_direction2: :up
+    end
+    let!(:road4) { FactoryBot.create :road, point1: point4, point2: point5, building_part: floor2, weight: 1000 }
+
+    context 'when walk up' do
+      let(:subject) { described_class.new(building.id, point1.id, point5.id) }
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[right left walk_up forward finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right up up up finish]) }
+    end
+
+    context 'when walk down' do
+      let(:subject) { described_class.new(building.id, point5.id, point1.id) }
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[forward walk_down backward right finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[down up down left finish]) }
+    end
+
+    context 'when walk down and change direction' do
+      let(:subject) { described_class.new(building.id, point5.id, point1.id) }
+      before do
+        road3.update(exit_map_direction1: :right)
+      end
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[forward walk_down right right finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[down right down left finish]) }
+      it do
+        expect(subject.find.path.map { |point| point[:legend] }).to eq(['Двигайтесь прямо 0 метров',
+                                                                        'Спуститесь на 1 этаж',
+                                                                        'Поверните направо и пройдите 0 метров',
+                                                                        'Поверните направо и пройдите 0 метров',
+                                                                        'Вы пришли'])
+      end
+    end
+
+    context 'finish point' do
+      let(:subject) { described_class.new(building.id, point1.id, point4.id) }
+
+      it { expect(subject.find.is_a?(Core::Routes::Dto::FindPathResponse)).to be_truthy }
+      it { expect(subject.find.success?).to be_truthy }
+      it { expect(subject.find.path.map { |point| point[:direction] }).to eq(%i[right left walk_up finish]) }
+      it { expect(subject.find.path.map { |point| point[:map_direction] }).to eq(%i[right up up finish]) }
+      it do
+        expect(subject.find.path.map { |point| point[:legend] }).to eq(['Поверните направо и пройдите 0 метров',
+                                                                        'Поверните налево и пройдите 0 метров',
+                                                                        'Поднимитесь на 2 этаж',
+                                                                        'Вы пришли'])
+      end
     end
   end
 end
