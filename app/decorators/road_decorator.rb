@@ -4,7 +4,7 @@
 class RoadDecorator < Draper::Decorator
   delegate_all
 
-  DEFAULT_TYPE_VALUE = 'undefined'
+  DEFAULT_TYPE_VALUE = 'road'
   DEFAULT_EXIT_DIRECTION_VALUE = 'undefined'
 
   def road_type

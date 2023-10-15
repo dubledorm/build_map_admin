@@ -37,12 +37,27 @@ ActiveAdmin.register Point do
       end
     end
 
-    panel Group.model_name.human do
+    panel Group.model_name.human(count: 3) do
       table_for resource.groups do
         column :name
         column :description
         column :created_at
         column :updated_at
+      end
+    end
+
+    panel Road.model_name.human(count: 3) do
+      table_for Road.by_point_id(resource.id).decorate do
+        column :road_type
+        column :weight
+        column :exit_map_direction1
+        column :exit_map_direction2
+        column :created_at
+        column :updated_at
+        column do |road|
+          link_to I18n.t('my_active_admin.road.show'), admin_building_road_path(building_id: road.building.id,
+                                                                                id: road.id)
+        end
       end
     end
 

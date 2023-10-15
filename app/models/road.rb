@@ -18,4 +18,5 @@ class Road < ApplicationRecord
 
   scope :road_only, -> { where('(road_type is NULL) OR (road_type = ?)', 'road') }
   scope :staircase_only, -> { where(road_type: 'staircase') }
+  scope :by_point_id, ->(point_id) { includes(:building).where('(point1_id = ?) or (point2_id = ?)', point_id, point_id) }
 end
