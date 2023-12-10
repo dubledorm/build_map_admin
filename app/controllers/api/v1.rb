@@ -20,6 +20,7 @@ class Api::V1 < Grape::API
       mount GroupsApi
       mount TargetsApi
       mount SearchApi
+      mount PointsApi
     end
 
     before do
