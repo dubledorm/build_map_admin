@@ -12,11 +12,11 @@ class Api
         end
 
         params do
-          requires :id, type: Integer, desc: 'Id точки'
+          requires :point_id, type: Integer, desc: 'Id точки'
         end
-        route_param :id do
+        route_param :point_id do
           get do
-            point = @building.points.where(id: params[:id]).targets
+            point = @building.points.where(id: params[:point_id]).targets
             present point, with: Api::V1::Entities::Point
           end
         end
