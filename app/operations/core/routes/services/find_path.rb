@@ -56,6 +56,8 @@ module Core
           end
           fill_legend(point_and_weight_array.last, nil, current_direction)
           point_and_weight_array
+        rescue StandardError => e
+          raise StandardError, "add_legend: #{e.message} point_and_weight_array: #{point_and_weight_array}"
         end
 
         def fill_legend(point_and_weight1, point_and_weight2, current_direction)
@@ -83,6 +85,8 @@ module Core
                                                                      queue[-1][:weight], queue[-1][:map_direction])
                                             .legend
           end
+        rescue StandardError => e
+          raise StandardError, "aggregate_steps: #{e.message} point_and_weight_array: #{point_and_weight_array}"
         end
 
         def build_points_hash(point_and_weight_array)

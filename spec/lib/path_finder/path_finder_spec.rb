@@ -41,4 +41,5 @@ RSpec.describe PathFinder do
   it { expect(subject.find(40, 20)).to eq([105]) }
   it { expect(subject.find(10, 10)).to eq([]) }
   it { expect(subject.find(10, 50)).to eq([101, 102, 106]) }
+  it { expect { subject.find(101, 1000) }.to raise_error(StandardError) }
 end
