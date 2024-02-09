@@ -75,15 +75,18 @@ module Core
 
         def aggregate_steps(point_and_weight_array)
           point_and_weight_array.each_with_object([]) do |point_end_weight, queue|
+            p "p: #{point_end_weight}"
             if queue.empty? || point_end_weight[:direction] != :forward || queue[-1][:direction] != :forward
               queue << point_end_weight
               next
             end
 
-            queue[-1][:weight] += point_end_weight[:weight] || 0
+            p '1--------1'
+            queue[-1][:weight] += point_end_weight[:weight]
             queue[-1][:legend] = PathSpeaker.build_without_map_scale(queue[-1][:point], point_end_weight[:point],
                                                                      queue[-1][:weight], queue[-1][:map_direction])
                                             .legend
+            p '2--------2'
           end
         rescue StandardError => e
           raise StandardError, "aggregate_steps: #{e.message} point_and_weight_array: #{point_and_weight_array}"
