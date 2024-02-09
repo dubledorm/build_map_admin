@@ -86,4 +86,15 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
       end.to raise_error(Core::Routes::Services::BaseSpeakerError)
     end
   end
+
+  describe 'build_without_map_scale' do
+    let(:point1_hash) { { id: 284, building_part_id: 7, point_type: 'crossroads', name: nil, description: nil, x_value: 349070, y_value: 88850, label_direction: 'none' } }
+    let(:point2_hash) { { id: 301, building_part_id: 7, point_type: 'crossroads', name: nil, description: nil, x_value: 386070, y_value: 88850, label_direction: 'none'} }
+    let(:weight) { 3 }
+    let(:current_direction) { :right }
+
+    it do
+      expect(described_class.build_without_map_scale(point1_hash, point2_hash, weight, current_direction).legend).to eq('Двигайтесь прямо 3 метров')
+    end
+  end
 end

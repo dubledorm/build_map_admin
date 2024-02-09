@@ -35,7 +35,7 @@ module Core
                        finish: ->(_) { 'Вы пришли' } }.freeze
 
         def self.build_without_map_scale(point1_hash, point2_hash, weight, current_direction)
-          result = PathSpeaker.new(point1_hash, point2_hash, weight, current_direction, 1)
+          result = PathSpeaker.new(point1_hash, point2_hash, nil, current_direction, 1)
           result.instance_variable_set(:@length_m, weight)
           result
         end
