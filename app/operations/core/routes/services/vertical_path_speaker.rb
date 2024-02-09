@@ -32,9 +32,9 @@ module Core
           return :finish if @point2_hash.nil?
 
           # В зависимости от того с какой стороны проходим дугу выбираем направление выхода
-          return @road_hash[:exit_map_direction2].to_sym if @point1_hash[:id] == @road_hash[:point1_id]
+          return @road_hash[:exit_map_direction2]&.to_sym if @point1_hash[:id] == @road_hash[:point1_id]
 
-          @road_hash[:exit_map_direction1].to_sym
+          @road_hash[:exit_map_direction1]&.to_sym
         end
 
         def vertical_direction
