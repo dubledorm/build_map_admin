@@ -71,4 +71,19 @@ RSpec.describe Core::Routes::Services::PathSpeaker do
 
     end
   end
+
+  describe 'error parameters' do
+    let(:building_part1) { FactoryBot.create :building_part, level: 1 }
+    let(:point1) { FactoryBot.create :point, building_part: building_part1, x_value: 0, y_value: 100 }
+    let(:point2) { FactoryBot.create :point, building_part: building_part1, x_value: 0, y_value: 0 }
+    let(:point1_hash) { point1.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
+    let(:point2_hash) { point2.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
+
+    it 'should return BaseSpeakerError when current_direction did not set' do
+      expect do
+        described_class.new(point1_hash, point2_hash, { weight: 10 }, nil, 10)
+                       .user_direction
+      end.to raise_error(Core::Routes::Services::BaseSpeakerError)
+    end
+  end
 end

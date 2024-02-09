@@ -46,6 +46,11 @@ module Core
 
         def user_direction
           @user_direction ||= direction_map(map_direction)
+          if @user_direction.nil?
+            raise BaseSpeakerError, "Ошибка преобразования направления. Функция user_direction. \
+@current_direction = #{@current_direction}, map_direction = #{map_direction}"
+          end
+          @user_direction
         end
 
         def legend

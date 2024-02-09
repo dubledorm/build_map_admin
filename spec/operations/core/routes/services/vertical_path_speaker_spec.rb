@@ -34,9 +34,11 @@ RSpec.describe Core::Routes::Services::VerticalPathSpeaker do
     let(:point1_hash) { point1.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
     let(:point2_hash) { point2.as_json(except: Core::Routes::Services::FindPath::EXCEPT_FIELDS).symbolize_keys }
 
-    it 'should return nil when exit_map_direction did not set in road hash' do
-      expect(described_class.new(point1_hash, point2_hash, { weight: 10 }, nil, 10)
-                            .map_direction).to be_nil
+    it 'should return BaseSpeakerError when exit_map_direction did not set in road hash' do
+      expect do
+        described_class.new(point1_hash, point2_hash, { weight: 10 }, nil, 10)
+                       .map_direction
+      end.to raise_error(Core::Routes::Services::BaseSpeakerError)
     end
   end
 end

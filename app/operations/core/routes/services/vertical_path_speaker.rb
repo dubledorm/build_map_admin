@@ -16,6 +16,11 @@ module Core
 
         def map_direction
           @map_direction ||= calc_map_direction
+          if @map_direction.nil?
+            raise BaseSpeakerError, "Ошибка настройки межэтажной дуги #{@road_hash}. \
+Вероятно не заполнены поля направлений выхода"
+          end
+          @map_direction
         end
 
         def user_direction

@@ -3,6 +3,9 @@
 module Core
   module Routes
     module Services
+      # Ошибка для класса BaseSpeaker
+      class BaseSpeakerError < StandardError; end
+
       # Базовый класс для составления словесного описания маршрута
       class BaseSpeaker
         attr_reader :length_m
