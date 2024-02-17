@@ -5,6 +5,7 @@ class Api
     module Entities
       # Класс, описывающий ответ функции поиска
       class BuildingPart < Grape::Entity
+        expose :id, documentation: { type: Integer, desc: 'Идентификатор записи' }
         expose :name, documentation: { type: String, desc: 'Название' }
         expose :map_scale, documentation: { type: String, desc: 'Маштаб карты' }
         expose :immutable_map_url, documentation: { type: String, desc: 'Карта' }
